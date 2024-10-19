@@ -12,12 +12,21 @@ base {
 
 
 repositories {
+    // Mirror for PlaceholderAPI, as TerraformersMC's maven does not have it for some reason.
+    maven {
+        url = "https://maven.nucleoid.xyz/"
+    }
     // DevAuth.
     maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
     // YetAnotherConfigLib.
     maven {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
+    }
+    // ModMenu.
+    maven {
+        name 'Terraformers'
+        url 'https://maven.terraformersmc.com/'
     }
 }
 
@@ -32,6 +41,9 @@ dependencies {
 
     // YetAnotherConfigLib.
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+
+    // ModMenu.
+    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 
     // DevAuth.
     modRuntimeOnly("me.djtheredstoner:DevAuth-fabric:1.2.1")

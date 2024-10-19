@@ -5,15 +5,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueueEntry {
-    public static ArrayList<String> HIDDEN_ENTRIES = new ArrayList<>();
-
     private static final Pattern ENTRY_PLOT_ID_REGEX = Pattern.compile("\\d+");
     private static final String DESCRIPTION_REGEX = "^\\d+\\. ";
+    public static ArrayList<String> HIDDEN_ENTRIES = new ArrayList<>();
 
     private final boolean beta;
-
-    private String description;
     private final Integer position;
+    private final String description;
     private Integer plotId;
 
     public QueueEntry(String rawEntry, int i) {
@@ -46,16 +44,11 @@ public class QueueEntry {
 
     public String getStrippedDescription() {
         try {
-            return getDescription().replaceAll(getPlotId().toString(), "")
-                    .replaceFirst("^( |-)+|\\1$", "") // ??
+            return getDescription().replaceAll(getPlotId().toString(), "").replaceFirst("^( |-)+|\\1$", "") // ??
                     .trim();
         } catch (NullPointerException e) {
             return getDescription().trim();
         }
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getPosition() {

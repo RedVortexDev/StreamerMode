@@ -13,7 +13,8 @@
 
   "environment": "client",
   "entrypoints": {
-    "client": ["io.github.redvortexdev.streamermode.StreamerMode"]
+    "client": ["io.github.redvortexdev.streamermode.StreamerMode"],
+    "modmenu": ["io.github.redvortexdev.streamermode.config.ModMenuIntegration"]
   },
 
   "mixins": [
