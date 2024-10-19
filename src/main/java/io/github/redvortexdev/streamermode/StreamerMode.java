@@ -93,7 +93,7 @@ public class StreamerMode implements ClientModInitializer {
                                             .styled(style -> style.withColor(TextColor.fromRgb(0x1f9947)))
                                             .append(Text.literal("Twitch Plot Queue")
                                                     .styled(style -> style.withColor(TextColor.fromRgb(0x33ffa7)))
-                                                    .append(Text.literal("⏩")
+                                                    .append(Text.literal("  ⏩")
                                                             .styled(style -> style.withColor(TextColor.fromRgb(0x1f9947))))
 
                                             )
