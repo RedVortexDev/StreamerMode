@@ -1,5 +1,6 @@
 package io.github.redvortexdev.streamermode.mixin;
 
+import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.chat.message.Message;
 import io.github.redvortexdev.streamermode.event.ReceiveSoundEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinClientPlayNetworkHandler {
     @Inject(method = "onPlaySoundFromEntity", at = @At("HEAD"), cancellable = true)
     public void onPlaySound(PlaySoundFromEntityS2CPacket packet, CallbackInfo ci) {
-        if (ReceiveSoundEvent.onEvent()) {
+        if (StreamerMode.isAllowed() && ReceiveSoundEvent.onEvent()) {
             ci.cancel();
         }
     }
@@ -24,8 +25,8 @@ public class MixinClientPlayNetworkHandler {
             shift = At.Shift.AFTER
     ))
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        //TODO: if (DFState.isOnDF()) {
-        new Message(packet, ci);
-        //}
+        if (/* TODO: DFState.isOnDF() && */ StreamerMode.isAllowed()) {
+            new Message(packet, ci);
+        }
     }
 }

@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.toast.SystemToast;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
@@ -36,7 +37,7 @@ public class StreamerMode implements ClientModInitializer {
             new UUID(0x901c4cd098b94d3dL, 0xa8e908d15c6a4472L)  // GeorgeRNG
     );
 
-    public static boolean allowed = false;
+    private static boolean allowed = false;
     public static Screen setScreen;
 
     @SuppressWarnings("unused")
@@ -60,14 +61,13 @@ public class StreamerMode implements ClientModInitializer {
         // TODO: Move to separate classes. I don't like this.
 
         ClientCommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess) -> {
+            if (!isAllowed()) return;
             dispatcher.register(literal("streamermode").executes(ctx -> {
-                if (!allowed) return 0;
                 setScreen = Config.HANDLER.generateGui().generateScreen(null);
                 return 0;
                 })
             );
             dispatcher.register(literal("queue").executes(ctx -> {
-                if (!allowed) return 0;
                 try {
                     if (MC.player == null) return -1;
                     String content = WebUtil.getString("https://twitch.center/customapi/quote/list?token=18a3878c");
@@ -188,5 +188,19 @@ public class StreamerMode implements ClientModInitializer {
             }))));
 
         }));
+    }
+
+    public static void enable() {
+        allowed = true;
+    }
+
+    public static boolean isAllowed() {
+        if (!StreamerMode.allowed)
+            StreamerMode.MC.getToastManager().add(new SystemToast(
+                    SystemToast.Type.PERIODIC_NOTIFICATION,
+                    Text.literal("Streamer Mode is disabled"),
+                    Text.literal("You are not allowed to use Streamer Mode, please delete the mod.")
+            ));
+        return StreamerMode.allowed;
     }
 }
