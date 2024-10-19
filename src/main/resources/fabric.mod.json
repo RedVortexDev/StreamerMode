@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "streamermode",
+  "version": "${version}",
+
+  "name": "StreamerMode",
+  "description": "",
+  "authors": [],
+  "contact": {},
+
+  "license": "LGPL-3.0",
+  "icon": "assets/streamermode/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": ["io.github.redvortexdev.streamermode.StreamerMode"]
+  },
+
+  "mixins": [
+    "streamermode.mixins.json"
+  ],
+
+  "depends": {
+    "yet_another_config_lib_v3": "*",
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
