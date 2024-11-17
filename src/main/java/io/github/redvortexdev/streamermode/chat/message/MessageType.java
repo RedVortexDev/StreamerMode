@@ -15,7 +15,7 @@ public enum MessageType {
 
     // Moderation
     MODERATION,
-    INCOMING_REPORT,
+    INCOMING_REPORT(true),
     SILENT_PUNISHMENT,
     SCANNING(2),
     TELEPORTING,

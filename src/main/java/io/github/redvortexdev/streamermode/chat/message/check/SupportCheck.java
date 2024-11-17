@@ -18,11 +18,6 @@ public class SupportCheck extends MessageCheck {
     }
 
     @Override
-    public void onReceive(Message message) {
-
-    }
-
-    @Override
     public boolean streamerHideEnabled() {
         return Config.instance().hideSupport;
     }

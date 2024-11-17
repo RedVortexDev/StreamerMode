@@ -9,7 +9,8 @@ public abstract class MessageCheck {
     /**
      * Use {@link Message#cancel()} to cancel the message
      */
-    public abstract void onReceive(Message message);
+    public void onReceive(Message message) {
+    }
 
     public abstract boolean streamerHideEnabled();
 }
