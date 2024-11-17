@@ -82,7 +82,7 @@ public class Config {
     @AutoGen(category = "misc")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
     @CustomDescription("If enabled, the mod will print debug messages to the console.")
-    public boolean debugging = true;
+    public boolean debugging = false;
 
     @SerialEntry
     @AutoGen(category = "misc")

@@ -10,7 +10,8 @@ public class DebugFinalizer extends MessageFinalizer {
     @Override
     protected void receive(Message message) {
         if (Config.instance().debugging) {
-            StreamerMode.LOGGER.info(Text.Serialization.toJsonString(message.getText()));
+            if (StreamerMode.MC.world == null) return;
+            StreamerMode.LOGGER.info(Text.Serialization.toJsonString(message.getText(), StreamerMode.MC.world.getRegistryManager()));
         }
     }
 }

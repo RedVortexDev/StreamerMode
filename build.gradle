@@ -12,10 +12,6 @@ base {
 
 
 repositories {
-    // Mirror for PlaceholderAPI, as TerraformersMC's maven does not have it for some reason.
-    maven {
-        url = "https://maven.nucleoid.xyz/"
-    }
     // DevAuth.
     maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
     // YetAnotherConfigLib.
