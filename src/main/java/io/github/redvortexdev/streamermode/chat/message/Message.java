@@ -46,7 +46,6 @@ public class Message {
      * Cancels this message. Also cancels the associated sound if there is any, plus cancels following messages if they are part.
      */
     public void cancel() {
-        System.out.println("cancel");
         callback.cancel();
 
         if (type.hasSound()) {

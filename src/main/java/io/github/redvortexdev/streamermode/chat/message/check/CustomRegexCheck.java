@@ -18,7 +18,6 @@ public class CustomRegexCheck extends MessageCheck {
 
     @Override
     public boolean check(Message message, String stripped) {
-        System.out.println("Checking custom regex: " + Config.instance().customRegex);
         try {
             return stripped.matches(Config.instance().customRegex);
         } catch (PatternSyntaxException e) {
