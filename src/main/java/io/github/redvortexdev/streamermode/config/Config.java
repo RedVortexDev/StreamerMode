@@ -24,18 +24,6 @@ public class Config {
             .build();
 
     @SerialEntry
-    @AutoGen(category = "misc")
-    @Boolean(formatter = Boolean.Formatter.ON_OFF)
-    @CustomDescription("If enabled, the mod will print debug messages to the console.")
-    public boolean debugging = true;
-
-    @SerialEntry
-    @AutoGen(category = "misc")
-    @EnumCycler
-    @CustomDescription("The sound that will play when a report is received.")
-    public Sound reportSound = Sound.NONE;
-
-    @SerialEntry
     @AutoGen(category = "hiding")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
     @CustomDescription("If enabled, admin messages will be hidden.")
@@ -89,10 +77,23 @@ public class Config {
     @CustomDescription("Custom regex to hide messages that match it.")
     public String customRegex = "";
 
+
+    @SerialEntry
+    @AutoGen(category = "misc")
+    @Boolean(formatter = Boolean.Formatter.ON_OFF)
+    @CustomDescription("If enabled, the mod will print debug messages to the console.")
+    public boolean debugging = true;
+
+    @SerialEntry
+    @AutoGen(category = "misc")
+    @EnumCycler
+    @CustomDescription("The sound to play when a report is received.")
+    public Sound reportSound = Sound.NONE;
+
+
     public static Config instance() {
         return HANDLER.instance();
     }
-
 
     public enum Sound {
         SHIELD_BLOCK(SoundEvents.ITEM_SHIELD_BLOCK),
