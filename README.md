@@ -1,6 +1,6 @@
 # StreamerMode
 
-A 1.20.4 Fabric mod for official DiamondFire streaming and content creation.
+A 1.21.1 Fabric mod for official DiamondFire streaming and content creation.
 
 ## Features
 
