@@ -24,8 +24,7 @@ public class MessageChecker {
 
             // Admin
             new SpyCheck(),
-            new BuycraftXUpdateCheck(),
-            new FastAsyncWorldEditUpdateCheck(),
+            new PluginUpdateCheck(),
             new AdminCheck(),
 
             // Custom regex

@@ -24,8 +24,7 @@ public enum MessageType {
     // Admin
     SPIES,
     ADMIN,
-    BUYCRAFT_PLUGIN_UPDATE,
-    WORLD_EDIT_PLUGIN_UPDATE,
+    PLUGIN_UPDATE,
 
     // Custom regex
     STREAMER_MODE_REGEX;

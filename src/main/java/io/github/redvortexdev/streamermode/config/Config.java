@@ -68,7 +68,7 @@ public class Config {
     @SerialEntry
     @AutoGen(category = "hiding")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
-    @CustomDescription("If enabled, BuycraftX and FastAsyncWorldEdit update messages will be hidden.")
+    @CustomDescription("If enabled, BuycraftX, FastAsyncWorldEdit, and ViaVersion update messages will be hidden.")
     public boolean hidePluginUpdate = true;
 
     @SerialEntry
