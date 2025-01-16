@@ -19,6 +19,6 @@ Hide messages from the chat matching a custom regex or messages that are:
 - Plot advertisements
 - Plot boosts
 - Spy messages (session, dm, and muted spy)
-- Plugin update messages (BuycraftX and FastAsyncWorldEdit)
+- Plugin update messages (BuycraftX, FastAsyncWorldEdit, and ViaVersion)
 
 Messages in the list that also play a sound also have their sound muted.
