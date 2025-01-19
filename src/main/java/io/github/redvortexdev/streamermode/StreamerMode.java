@@ -79,7 +79,7 @@ public class StreamerMode implements ClientModInitializer {
                     for (String entry : splitQueue) {
                         if (entry.isEmpty()) continue;
                         QueueEntry queueEntry = new QueueEntry(entry, i);
-                        Integer plotId = queueEntry.getPlotId();
+                        String plotId = queueEntry.getPlotId();
                         if (!QueueEntry.HIDDEN_ENTRIES.contains(plotId == null ? "?" : plotId.toString())) {
                             i++;
                             queue.add(new QueueEntry(entry, i));

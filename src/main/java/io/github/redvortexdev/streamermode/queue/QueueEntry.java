@@ -5,14 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueueEntry {
-    private static final Pattern ENTRY_PLOT_ID_REGEX = Pattern.compile("\\d+");
+    private static final Pattern ENTRY_PLOT_ID_REGEX = Pattern.compile("^[a-z0-9-]+");
     private static final String DESCRIPTION_REGEX = "^\\d+\\. ";
     public static ArrayList<String> HIDDEN_ENTRIES = new ArrayList<>();
 
     private final boolean beta;
     private final Integer position;
     private final String description;
-    private Integer plotId;
+    private String plotId;
 
     public QueueEntry(String rawEntry, int i) {
         // Contains Beta
@@ -27,7 +27,7 @@ public class QueueEntry {
         // Plot ID
         Matcher matcher = ENTRY_PLOT_ID_REGEX.matcher(description);
         if (matcher.find()) try {
-            this.plotId = Integer.parseInt(matcher.group(0));
+            this.plotId = matcher.group(0);
         } catch (IndexOutOfBoundsException | IllegalStateException e) {
             this.plotId = null;
         }
@@ -55,7 +55,7 @@ public class QueueEntry {
         return position;
     }
 
-    public Integer getPlotId() {
+    public String getPlotId() {
         return plotId;
     }
 }
