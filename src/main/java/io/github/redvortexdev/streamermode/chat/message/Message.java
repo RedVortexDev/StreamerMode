@@ -48,13 +48,13 @@ public class Message {
     public void cancel() {
         callback.cancel();
 
-        if (type.hasSound()) {
-            ReceiveSoundEvent.cancelNextSound();
+        if (type.getSoundCount() > 0) {
+            ReceiveSoundEvent.cancelNextSound(type.getSoundCount());
         }
         MessageGrabber.hide(type.getMessageAmount() - 1);
 
         if (Config.instance().debugging) {
-            StreamerMode.LOGGER.info("[CANCELLED] {}", text.toString());
+            StreamerMode.LOGGER.info("[CANCELLED] [{}] {} | {}", type.name(), text.getString(), text);
         }
     }
 }

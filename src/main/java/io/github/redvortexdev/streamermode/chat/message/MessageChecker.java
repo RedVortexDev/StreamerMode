@@ -10,6 +10,7 @@ public class MessageChecker {
             new PlotBoostCheck(),
 
             // Support
+            new SupportQueueCheck(),
             new SupportCheck(),
             new SupportQuestionCheck(),
             new SupportAnswerCheck(),

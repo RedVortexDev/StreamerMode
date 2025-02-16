@@ -2,6 +2,7 @@ package io.github.redvortexdev.streamermode.mixin;
 
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.chat.message.Message;
+import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.event.ReceiveSoundEvent;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
@@ -15,8 +16,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinClientPlayNetworkHandler {
     @Inject(method = "onPlaySoundFromEntity", at = @At("HEAD"), cancellable = true)
     public void onPlaySound(PlaySoundFromEntityS2CPacket packet, CallbackInfo ci) {
+        // The support leave message is sent after the sound play, left in debugging code
+        // to be able to confirm this in the future if the bug is fixed.
+        if (Config.instance().debugging)
+            StreamerMode.LOGGER.info("[SOUND] {}", packet.getSound().getKey().get().getValue().getPath());
         if (StreamerMode.isAllowed() && ReceiveSoundEvent.onEvent()) {
+            if (Config.instance().debugging) StreamerMode.LOGGER.info("^ Cancelled");
             ci.cancel();
+        } else {
+            if (Config.instance().debugging) StreamerMode.LOGGER.info("^ Not cancelled");
         }
     }
 

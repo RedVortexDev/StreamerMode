@@ -4,8 +4,8 @@ public class ReceiveSoundEvent {
 
     private static int soundsToCancel = 0;
 
-    public static void cancelNextSound() {
-        soundsToCancel++;
+    public static void cancelNextSound(int amount) {
+        soundsToCancel += amount;
     }
 
     public static boolean onEvent() {

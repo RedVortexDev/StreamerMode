@@ -10,6 +10,7 @@ public enum MessageType {
 
     // Support
     SUPPORT,
+    SUPPORT_QUEUE(1, 2),
     SUPPORT_QUESTION(true),
     SUPPORT_ANSWER(true),
 
@@ -30,30 +31,30 @@ public enum MessageType {
     STREAMER_MODE_REGEX;
 
     private final int messageAmount;
-    private final boolean hasSound;
+    private final int soundCount;
 
     MessageType() {
         this(1);
     }
 
     MessageType(int messageAmount) {
-        this(messageAmount, false);
+        this(messageAmount, 0);
     }
 
     MessageType(boolean hasSound) {
-        this(1, hasSound);
+        this(1, hasSound ? 1 : 0);
     }
 
-    MessageType(int messageAmount, boolean hasSound) {
+    MessageType(int messageAmount, int soundCount) {
         this.messageAmount = messageAmount;
-        this.hasSound = hasSound;
+        this.soundCount = soundCount;
     }
 
     public int getMessageAmount() {
         return messageAmount;
     }
 
-    public boolean hasSound() {
-        return hasSound;
+    public int getSoundCount() {
+        return soundCount;
     }
 }
