@@ -27,4 +27,5 @@ public class ReportCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideModeration;
     }
+
 }

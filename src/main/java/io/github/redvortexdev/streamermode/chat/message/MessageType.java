@@ -1,22 +1,23 @@
 package io.github.redvortexdev.streamermode.chat.message;
 
 public enum MessageType {
+
     OTHER,
 
     // General
-    DIRECT_MESSAGE(true),
-    PLOT_AD(true),
-    PLOT_BOOST(true),
+    DIRECT_MESSAGE(1, 1),
+    PLOT_AD(1, 1),
+    PLOT_BOOST(1, 1),
 
     // Support
     SUPPORT,
     SUPPORT_QUEUE(1, 2),
-    SUPPORT_QUESTION(true),
-    SUPPORT_ANSWER(true),
+    SUPPORT_QUESTION(1, 1),
+    SUPPORT_ANSWER(1, 1),
 
     // Moderation
     MODERATION,
-    INCOMING_REPORT(true),
+    INCOMING_REPORT(1, 1),
     SILENT_PUNISHMENT,
     SCANNING(2),
     TELEPORTING,
@@ -41,20 +42,18 @@ public enum MessageType {
         this(messageAmount, 0);
     }
 
-    MessageType(boolean hasSound) {
-        this(1, hasSound ? 1 : 0);
-    }
-
     MessageType(int messageAmount, int soundCount) {
         this.messageAmount = messageAmount;
         this.soundCount = soundCount;
     }
 
     public int getMessageAmount() {
-        return messageAmount;
+        return this.messageAmount;
     }
 
     public int getSoundCount() {
-        return soundCount;
+        return this.soundCount;
     }
+
 }
+

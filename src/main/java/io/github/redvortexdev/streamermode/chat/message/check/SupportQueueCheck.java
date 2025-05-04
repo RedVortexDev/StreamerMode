@@ -22,4 +22,5 @@ public class SupportQueueCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideSupport;
     }
+
 }

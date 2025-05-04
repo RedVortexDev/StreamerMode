@@ -13,4 +13,5 @@ public abstract class MessageCheck {
     }
 
     public abstract boolean streamerHideEnabled();
+
 }

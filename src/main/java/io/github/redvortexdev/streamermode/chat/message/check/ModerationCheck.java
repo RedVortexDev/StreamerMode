@@ -6,6 +6,7 @@ import io.github.redvortexdev.streamermode.chat.message.MessageType;
 import io.github.redvortexdev.streamermode.config.Config;
 
 public class ModerationCheck extends MessageCheck {
+
     @Override
     public MessageType getType() {
         return MessageType.MODERATION;
@@ -21,4 +22,5 @@ public class ModerationCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideModeration;
     }
+
 }

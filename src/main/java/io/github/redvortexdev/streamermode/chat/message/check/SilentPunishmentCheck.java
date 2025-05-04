@@ -6,6 +6,7 @@ import io.github.redvortexdev.streamermode.chat.message.MessageType;
 import io.github.redvortexdev.streamermode.config.Config;
 
 public class SilentPunishmentCheck extends MessageCheck {
+
     @Override
     public MessageType getType() {
         return MessageType.SILENT_PUNISHMENT;
@@ -20,4 +21,5 @@ public class SilentPunishmentCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideModeration;
     }
+
 }

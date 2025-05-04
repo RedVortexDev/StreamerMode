@@ -6,6 +6,7 @@ import io.github.redvortexdev.streamermode.chat.message.MessageType;
 import io.github.redvortexdev.streamermode.config.Config;
 
 public class BannedJoinCheck extends MessageCheck {
+
     private static final String BANNED_JOIN_REGEX = "^([^ ]{3,}) tried to join, but is banned \\(.*\\)!$";
 
     @Override
@@ -22,4 +23,5 @@ public class BannedJoinCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideModeration;
     }
+
 }

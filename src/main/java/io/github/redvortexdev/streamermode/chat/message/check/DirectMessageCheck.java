@@ -6,6 +6,7 @@ import io.github.redvortexdev.streamermode.chat.message.MessageType;
 import io.github.redvortexdev.streamermode.config.Config;
 
 public class DirectMessageCheck extends MessageCheck {
+
     private static final String DIRECT_MESSAGE_REGEX = "^\\[(\\w{3,16}) → You] .+$";
 
     public static boolean usernameMatches(Message message, String username) {
@@ -26,4 +27,5 @@ public class DirectMessageCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideDMs;
     }
+
 }

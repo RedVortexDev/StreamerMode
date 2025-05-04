@@ -8,6 +8,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import java.util.regex.Pattern;
 
 public class PlotAdCheck extends MessageCheck {
+
     private static final Pattern PLOT_AD_REGEX = Pattern.compile(" {32}\\[ Plot Ad ] {32}\\n(.+)\\n {78}");
 
     @Override
@@ -24,4 +25,5 @@ public class PlotAdCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hidePlotAds;
     }
+
 }

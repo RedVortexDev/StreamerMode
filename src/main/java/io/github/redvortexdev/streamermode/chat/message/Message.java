@@ -9,6 +9,7 @@ import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 public class Message {
+
     private final Text text;
     private final CallbackInfo callback;
     private final MessageType type;
@@ -23,11 +24,11 @@ public class Message {
     }
 
     public Text getText() {
-        return text;
+        return this.text;
     }
 
     public MessageCheck getCheck() {
-        return check;
+        return this.check;
     }
 
     public void setCheck(MessageCheck check) {
@@ -35,26 +36,27 @@ public class Message {
     }
 
     public String getStripped() {
-        return text.getString();
+        return this.text.getString();
     }
 
     public boolean typeIs(MessageType toCompare) {
-        return type == toCompare;
+        return this.type == toCompare;
     }
 
     /**
      * Cancels this message. Also cancels the associated sound if there is any, plus cancels following messages if they are part.
      */
     public void cancel() {
-        callback.cancel();
+        this.callback.cancel();
 
-        if (type.getSoundCount() > 0) {
-            ReceiveSoundEvent.cancelNextSound(type.getSoundCount());
+        if (this.type.getSoundCount() > 0) {
+            ReceiveSoundEvent.cancelNextSound(this.type.getSoundCount());
         }
-        MessageGrabber.hide(type.getMessageAmount() - 1);
+        MessageGrabber.hide(this.type.getMessageAmount() - 1);
 
         if (Config.instance().debugging) {
-            StreamerMode.LOGGER.info("[CANCELLED] [{}] {} | {}", type.name(), text.getString(), text);
+            StreamerMode.LOGGER.info("[CANCELLED] [{}] {} | {}", this.type.name(), this.text.getString(), this.text);
         }
     }
+
 }

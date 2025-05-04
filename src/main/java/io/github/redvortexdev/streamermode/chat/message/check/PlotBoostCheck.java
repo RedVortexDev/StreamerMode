@@ -8,6 +8,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import java.util.regex.Pattern;
 
 public class PlotBoostCheck extends MessageCheck {
+
     private static final Pattern PLOT_BOOST_REGEX = Pattern.compile(" {78}\n(.+)\n {29}\u200c→ Click to join!\n {78}");
 
     @Override
@@ -24,4 +25,5 @@ public class PlotBoostCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hidePlotBoosts;
     }
+
 }

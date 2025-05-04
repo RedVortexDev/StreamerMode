@@ -8,6 +8,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import java.util.regex.Pattern;
 
 public class AltCheck extends MessageCheck {
+
     private static final Pattern ALT_SCAN_REGEX = Pattern.compile("^Scanning \\w+(.|\n)*\\[Online] \\[Offline] \\[(IP|)Banned]\1*$");
 
     @Override
@@ -24,4 +25,5 @@ public class AltCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideModeration;
     }
+
 }

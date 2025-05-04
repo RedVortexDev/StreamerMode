@@ -17,4 +17,5 @@ public abstract class MessageFinalizers {
             finalizer.receive(message);
         }
     }
+
 }

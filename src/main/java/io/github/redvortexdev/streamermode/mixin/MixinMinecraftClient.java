@@ -9,8 +9,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
 public class MixinMinecraftClient {
+
     @Inject(method = "close", at = @At("HEAD"))
     public void close(CallbackInfo ci) {
         Config.HANDLER.save();
     }
+
 }

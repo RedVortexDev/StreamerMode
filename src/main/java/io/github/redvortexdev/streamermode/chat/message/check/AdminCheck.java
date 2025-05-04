@@ -21,4 +21,5 @@ public class AdminCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideAdmin;
     }
+
 }

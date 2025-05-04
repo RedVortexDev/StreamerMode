@@ -11,7 +11,7 @@ public class StreamerModeFinalizer extends MessageFinalizer {
     private static final String[] HIDE_DMS_EXEMPTIONS = new String[]{
             "RedVortx",
             "GeorgeRNG",
-            "Electrosolt",
+            "Electrosolt"
     };
 
     private static boolean matchesDirectMessageExemptions(Message message) {
@@ -29,11 +29,12 @@ public class StreamerModeFinalizer extends MessageFinalizer {
     protected void receive(Message message) {
         MessageCheck check = message.getCheck();
         if (
-                        check != null
+                check != null
                         && check.streamerHideEnabled()
                         && !matchesDirectMessageExemptions(message)
         ) {
             message.cancel();
         }
     }
+
 }

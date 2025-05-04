@@ -3,8 +3,11 @@ package io.github.redvortexdev.streamermode.config;
 import com.google.gson.GsonBuilder;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
+import dev.isxander.yacl3.config.v2.api.autogen.AutoGen;
 import dev.isxander.yacl3.config.v2.api.autogen.Boolean;
-import dev.isxander.yacl3.config.v2.api.autogen.*;
+import dev.isxander.yacl3.config.v2.api.autogen.CustomDescription;
+import dev.isxander.yacl3.config.v2.api.autogen.EnumCycler;
+import dev.isxander.yacl3.config.v2.api.autogen.StringField;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import net.fabricmc.loader.api.FabricLoader;
@@ -14,6 +17,7 @@ import net.minecraft.util.Identifier;
 
 @SuppressWarnings("unused")
 public class Config {
+
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
             .id(Identifier.of(StreamerMode.MOD_ID, "config"))
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
@@ -95,7 +99,6 @@ public class Config {
     @CustomDescription("The sound to play when a report is received.")
     public Sound reportSound = Sound.NONE;
 
-
     public static Config instance() {
         return HANDLER.instance();
     }
@@ -132,11 +135,12 @@ public class Config {
         }
 
         public SoundEvent getSound() {
-            return sound;
+            return this.sound;
         }
 
         public Sound[] getValues() {
             return values();
         }
     }
+
 }

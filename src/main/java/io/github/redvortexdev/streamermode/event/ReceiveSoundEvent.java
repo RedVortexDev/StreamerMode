@@ -1,8 +1,11 @@
 package io.github.redvortexdev.streamermode.event;
 
-public class ReceiveSoundEvent {
+public final class ReceiveSoundEvent {
 
     private static int soundsToCancel = 0;
+
+    private ReceiveSoundEvent() {
+    }
 
     public static void cancelNextSound(int amount) {
         soundsToCancel += amount;
@@ -15,4 +18,5 @@ public class ReceiveSoundEvent {
         }
         return false;
     }
+
 }

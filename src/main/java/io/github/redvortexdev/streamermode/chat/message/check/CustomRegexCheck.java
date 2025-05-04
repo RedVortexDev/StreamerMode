@@ -11,6 +11,7 @@ import io.github.redvortexdev.streamermode.util.chat.ChatUtil;
 import java.util.regex.PatternSyntaxException;
 
 public class CustomRegexCheck extends MessageCheck {
+
     @Override
     public MessageType getType() {
         return MessageType.STREAMER_MODE_REGEX;
@@ -31,4 +32,5 @@ public class CustomRegexCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return !Config.instance().customRegex.isEmpty();
     }
+
 }

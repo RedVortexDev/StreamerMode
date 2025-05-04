@@ -5,9 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueueEntry {
+
     private static final Pattern ENTRY_PLOT_ID_REGEX = Pattern.compile("^[a-z0-9-]+");
     private static final String DESCRIPTION_REGEX = "^\\d+\\. ";
-    public static ArrayList<String> HIDDEN_ENTRIES = new ArrayList<>();
+    private static final ArrayList<String> hiddenEntries = new ArrayList<>();
 
     private final boolean beta;
     private final Integer position;
@@ -25,7 +26,7 @@ public class QueueEntry {
         this.position = i;
 
         // Plot ID
-        Matcher matcher = ENTRY_PLOT_ID_REGEX.matcher(description);
+        Matcher matcher = ENTRY_PLOT_ID_REGEX.matcher(this.description);
         if (matcher.find()) try {
             this.plotId = matcher.group(0);
         } catch (IndexOutOfBoundsException | IllegalStateException e) {
@@ -35,27 +36,32 @@ public class QueueEntry {
     }
 
     public boolean isBeta() {
-        return beta;
+        return this.beta;
     }
 
     private String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getStrippedDescription() {
         try {
-            return getDescription().replaceAll(getPlotId().toString(), "").replaceFirst("^( |-)+|\\1$", "") // ??
+            return this.getDescription().replaceAll(this.getPlotId(), "").replaceFirst("^( |-)+|\\1$", "") // ??
                     .trim();
         } catch (NullPointerException e) {
-            return getDescription().trim();
+            return this.getDescription().trim();
         }
     }
 
     public Integer getPosition() {
-        return position;
+        return this.position;
     }
 
     public String getPlotId() {
-        return plotId;
+        return this.plotId;
     }
+
+    public static ArrayList<String> getHiddenEntries() {
+        return hiddenEntries;
+    }
+
 }

@@ -8,6 +8,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import java.util.regex.Pattern;
 
 public class TeleportCheck extends MessageCheck {
+
     private static final Pattern TELEPORTING_REGEX = Pattern.compile("^\\[([^ ]{3,}): Teleported ([^ ]{3,}) to ([^ ]{3,})]$");
 
     @Override
@@ -24,4 +25,5 @@ public class TeleportCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideModeration;
     }
+
 }

@@ -9,8 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MessageGrabber {
+public final class MessageGrabber {
 
+    public static final int DEFAULT_TIMEOUT = 1000;
     private static final List<Text> currentMessages = new ArrayList<>();
     private static final List<MessageGrabberTask> tasks = new ArrayList<>();
     private static Consumer<List<Text>> messageConsumer;
@@ -18,6 +19,9 @@ public class MessageGrabber {
     private static boolean silent = false;
     private static MessageType filter = null;
     private static Date timeout = null;
+
+    private MessageGrabber() {
+    }
 
     public static void grabSilently(int messages, int time, Consumer<List<Text>> consumer, MessageType filter) {
         if (isActive()) {
@@ -32,18 +36,26 @@ public class MessageGrabber {
     }
 
     public static void hide(int messages) {
-        if (messages > 0) grabSilently(messages, getDefaultTimeout(), ignored -> {
-        }, null);
+        if (messages > 0) {
+            grabSilently(messages, getDefaultTimeout(), ignored -> {
+            }, null);
+        }
     }
 
     public static void supply(Message msg) {
-        if (filter != null && !msg.typeIs(filter)) return;
-        if (timeout != null && new Date().after(timeout)) return;
+        if (filter != null && !msg.typeIs(filter)) {
+            return;
+        }
+        if (timeout != null && new Date().after(timeout)) {
+            return;
+        }
 
         Text message = msg.getText();
         currentMessages.add(message);
 
-        if (silent) msg.cancel();
+        if (silent) {
+            msg.cancel();
+        }
 
         if (currentMessages.size() >= messagesToGrab) {
             messageConsumer.accept(currentMessages);
@@ -62,7 +74,7 @@ public class MessageGrabber {
     }
 
     public static int getDefaultTimeout() { // I was rather planning to make this use the player's ping
-        return 1000;
+        return DEFAULT_TIMEOUT;
     }
 
     /**
@@ -79,4 +91,5 @@ public class MessageGrabber {
     public static boolean isActive() {
         return messageConsumer != null;
     }
+
 }

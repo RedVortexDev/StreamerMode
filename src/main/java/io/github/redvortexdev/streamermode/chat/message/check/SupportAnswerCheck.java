@@ -8,6 +8,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import java.util.regex.Pattern;
 
 public class SupportAnswerCheck extends MessageCheck {
+
     private static final Pattern SUPPORT_ANSWER_REGEX = Pattern.compile("^.*\\n» \\w+ has answered \\w+'s question:\\n\\n.+\\n.*$");
 
     @Override
@@ -24,4 +25,5 @@ public class SupportAnswerCheck extends MessageCheck {
     public boolean streamerHideEnabled() {
         return Config.instance().hideSupport;
     }
+
 }
