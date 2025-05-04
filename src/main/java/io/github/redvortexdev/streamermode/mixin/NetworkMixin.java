@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({ClientCommonNetworkHandler.class})
+@Mixin(ClientCommonNetworkHandler.class)
 public class NetworkMixin {
 
     @Inject(method = {"onPacketException"}, at = {@At("HEAD")}, cancellable = true)

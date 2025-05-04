@@ -7,7 +7,9 @@ import io.github.redvortexdev.streamermode.util.Palette;
 import io.github.redvortexdev.streamermode.util.WebUtil;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.ClickEvent;
@@ -46,6 +48,7 @@ public class StreamerMode implements ClientModInitializer {
     public static final int HEADER_PAD = 24;
 
     private static boolean allowed = false;
+    private static Screen queuedScreen;
 
     @SuppressWarnings("unused")
     private final String WARNING = "Do not modify the mod to enable Streamer Mode, it includes banned capabilities.";
@@ -70,12 +73,19 @@ public class StreamerMode implements ClientModInitializer {
     public void onInitializeClient() {
         Config.HANDLER.load();
 
+        ClientTickEvents.START_CLIENT_TICK.register(client -> {
+            if (queuedScreen != null) {
+                MC.setScreen(queuedScreen);
+                queuedScreen = null;
+            }
+        });
+
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
             if (!isAllowed()) {
                 return;
             }
             dispatcher.register(literal("streamermode").executes(ctx -> {
-                MC.execute(() -> Config.HANDLER.generateGui().generateScreen(null));
+                queuedScreen = Config.HANDLER.generateGui().generateScreen(null);
                 return 0;
             }));
 
