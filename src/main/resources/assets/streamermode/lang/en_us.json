@@ -1,5 +1,6 @@
 {
   "yacl3.config.streamermode:config.category.misc": "Miscellaneous",
+  "yacl3.config.streamermode:config.networkProtocolErrorSuppression": "Network Protocol Error Suppression",
   "yacl3.config.streamermode:config.debugging": "Debugging",
   "yacl3.config.streamermode:config.reportSound": "Incoming Report Sound",
 

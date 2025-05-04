@@ -77,6 +77,11 @@ public class Config {
     @CustomDescription("Custom regex to hide messages that match it.")
     public String customRegex = "";
 
+    @SerialEntry
+    @AutoGen(category = "misc")
+    @Boolean(formatter = Boolean.Formatter.ON_OFF)
+    @CustomDescription("If enabled, Network Protocol Error kicks will be suppressed.")
+    public boolean networkProtocolErrorSuppression = true;
 
     @SerialEntry
     @AutoGen(category = "misc")
