@@ -38,6 +38,9 @@ dependencies {
     // YetAnotherConfigLib.
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
+    // Twitch4J
+    implementation 'com.github.twitch4j:twitch4j:1.24.0'
+
     // ModMenu.
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
 

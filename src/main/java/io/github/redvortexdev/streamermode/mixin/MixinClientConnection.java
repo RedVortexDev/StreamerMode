@@ -1,6 +1,7 @@
 package io.github.redvortexdev.streamermode.mixin;
 
 import io.github.redvortexdev.streamermode.StreamerMode;
+import io.github.redvortexdev.streamermode.twitch.TwitchChatRelay;
 import net.minecraft.network.ClientConnection;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,6 +15,7 @@ public class MixinClientConnection {
     public void connect(CallbackInfo ci) {
         if (StreamerMode.STREAMER_MODE_ALLOWED_PLAYERS.contains(StreamerMode.MC.getSession().getUuidOrNull())) {
             StreamerMode.enable();
+            TwitchChatRelay.getInstance().connectToTwitchIRC();
         }
     }
 

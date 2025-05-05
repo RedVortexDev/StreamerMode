@@ -82,6 +82,24 @@ public class Config {
     public String customRegex = "";
 
     @SerialEntry
+    @AutoGen(category = "twitch")
+    @Boolean(formatter = Boolean.Formatter.ON_OFF)
+    @CustomDescription("Enable Twitch -> Minecraft chat relay.")
+    public boolean twitchRelayEnabled = false;
+
+    @SerialEntry
+    @AutoGen(category = "twitch")
+    @StringField
+    @CustomDescription("Channel ID to receive Twitch chat messages from.")
+    public String twitchRelayChannel = "";
+
+    @SerialEntry
+    @AutoGen(category = "twitch")
+    @StringField
+    @CustomDescription("The OAuth token for the Twitch account.")
+    public String twitchOAuthToken = "";
+
+    @SerialEntry
     @AutoGen(category = "misc")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
     @CustomDescription("If enabled, Network Protocol Error kicks will be suppressed.")
