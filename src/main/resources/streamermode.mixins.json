@@ -5,9 +5,9 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "MixinClientConnection",
-    "MixinMinecraftClient",
     "MixinClientPlayNetworkHandler",
-    "NetworkMixin"
+    "MixinMinecraftClient",
+    "MixinNetwork"
   ],
   "injectors": {
     "defaultRequire": 1
