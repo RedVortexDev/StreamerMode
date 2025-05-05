@@ -1,0 +1,13 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "streamermode:font/twitch_relay.png",
+      "chars": [
+        "TM"
+      ],
+      "height": 8,
+      "ascent": 8
+    }
+  ]
+}

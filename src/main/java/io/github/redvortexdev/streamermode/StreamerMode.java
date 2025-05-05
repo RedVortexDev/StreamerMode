@@ -18,6 +18,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -218,6 +219,10 @@ public class StreamerMode implements ClientModInitializer {
                 return 0;
             }))));
         });
+    }
+
+    public static Identifier identifier(String path) {
+        return Identifier.of(MOD_ID, path);
     }
 
 }
