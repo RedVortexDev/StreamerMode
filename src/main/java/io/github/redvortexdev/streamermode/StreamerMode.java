@@ -3,6 +3,7 @@ package io.github.redvortexdev.streamermode;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.queue.QueueEntry;
+import io.github.redvortexdev.streamermode.twitch.TwitchChatRelay;
 import io.github.redvortexdev.streamermode.util.Palette;
 import io.github.redvortexdev.streamermode.util.WebUtil;
 import net.fabricmc.api.ClientModInitializer;
@@ -78,6 +79,9 @@ public class StreamerMode implements ClientModInitializer {
             if (queuedScreen != null) {
                 MC.setScreen(queuedScreen);
                 queuedScreen = null;
+            }
+            if (MC.player != null) {
+                TwitchChatRelay.getInstance().tick();
             }
         });
 

@@ -14,5 +14,6 @@ public class Palette {
     public static final TextColor SALMON = TextColor.fromRgb(0xc96363);
     public static final TextColor ORANGE = TextColor.fromRgb(0xd95104);
     public static final TextColor PURPLE = TextColor.fromRgb(0xc860f7);
+    public static final TextColor GRAY = TextColor.fromRgb(0x95aeba);
 
 }

@@ -4,7 +4,7 @@
       "type": "bitmap",
       "file": "streamermode:font/twitch_relay.png",
       "chars": [
-        "TM"
+        "TMS12345"
       ],
       "height": 8,
       "ascent": 8

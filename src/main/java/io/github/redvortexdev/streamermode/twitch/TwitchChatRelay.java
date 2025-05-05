@@ -5,6 +5,7 @@ import com.github.twitch4j.chat.TwitchChatBuilder;
 import com.github.twitch4j.chat.events.channel.IRCMessageEvent;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
+import io.github.redvortexdev.streamermode.util.Palette;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
@@ -12,90 +13,178 @@ import java.util.Optional;
 
 public final class TwitchChatRelay {
 
-    public static final int HEX_RADIX = 16;
-    private static final String CHANNEL_NAME = Config.instance().twitchRelayChannel;
+    public static final int UPDATE_INTERVAL = 20;
+    private static final int HEX_RADIX = 16;
+    private static final TwitchChatRelay INSTANCE = new TwitchChatRelay();
+    private final TwitchMessageFormatter formatter;
     private TwitchChat chatClient;
-    private boolean allowedToConnect = false;
-    private boolean connected = false;
+    private boolean connected;
+    private String currentChannel;
+    private int tickCounter = 0;
 
     private TwitchChatRelay() {
-        if (!Config.instance().twitchRelayEnabled || CHANNEL_NAME.isEmpty()) {
-            return;
+        this.formatter = new TwitchMessageFormatter();
+        this.connected = false;
+        this.currentChannel = "";
+
+        String channel = Config.instance()
+                .twitchRelayChannel
+                .trim();
+
+        if (Config.instance().twitchRelayEnabled && !channel.isEmpty()) {
+            this.createClientIfNeeded();
+            this.connectToChannel(channel);
+            this.sendSystemMessage(
+                    "Twitch relay connected to " + channel
+            );
         }
-        this.allowedToConnect = true;
-        this.chatClient = TwitchChatBuilder.builder().build();
     }
 
     public static TwitchChatRelay getInstance() {
-        return Instance.INSTANCE;
+        return INSTANCE;
     }
 
-    public void connectToTwitchIRC() {
-        if (!this.allowedToConnect || this.connected) {
+    public void tick() {
+        this.tickCounter++;
+        if (this.tickCounter < UPDATE_INTERVAL) {
             return;
         }
-        this.connected = true;
+        this.tickCounter = 0;
+        this.updateFromConfig();
+    }
+
+    public void updateFromConfig() {
+        boolean enabled = Config.instance().twitchRelayEnabled;
+        String channel = Config.instance()
+                .twitchRelayChannel
+                .trim();
+
+        if (enabled && !channel.isEmpty()) {
+            if (!this.connected) {
+                this.createClientIfNeeded();
+                this.connectToChannel(channel);
+                this.sendSystemMessage("Twitch relay connected to " + channel);
+
+            } else if (!channel.equals(this.currentChannel)) {
+                this.switchChannel(channel);
+                this.sendSystemMessage("Twitch relay channel changed to " + channel);
+            }
+        } else {
+            if (this.connected) {
+                this.disconnect();
+                this.sendSystemMessage("Twitch relay disconnected");
+            }
+        }
+    }
+
+    private void createClientIfNeeded() {
+        if (this.chatClient != null) {
+            return;
+        }
+
+        this.chatClient = TwitchChatBuilder.builder().build();
 
         this.chatClient.getEventManager().onEvent(IRCMessageEvent.class, this::onChatMessage);
+    }
 
+    private void connectToChannel(String channel) {
         this.chatClient.connect();
-        this.chatClient.joinChannel(CHANNEL_NAME);
+        this.chatClient.joinChannel(channel);
+
+        this.connected = true;
+        this.currentChannel = channel;
+    }
+
+    private void switchChannel(String newChannel) {
+        this.chatClient.leaveChannel(this.currentChannel);
+        this.chatClient.joinChannel(newChannel);
+
+        this.currentChannel = newChannel;
+    }
+
+    private void disconnect() {
+        if (!this.connected) {
+            return;
+        }
+
+        this.chatClient.disconnect();
+        this.connected = false;
+        this.currentChannel = "";
     }
 
     private void onChatMessage(IRCMessageEvent event) {
         if (!Config.instance().twitchRelayEnabled) {
             return;
         }
-        Optional<String> userNameOptional = event.getUserDisplayName();
-        Optional<String> messageOptional = event.getMessage();
-        if (userNameOptional.isEmpty() || messageOptional.isEmpty()) {
-            return;
-        }
-        String message = messageOptional.get();
-        String userName = userNameOptional.get();
 
-        // If the user is nightbot or the message starts with "!", ignore it (bot & command)
-        if (event.getUser() != null && event.getUser().getName().equals("nightbot") || message.startsWith("!")) {
+        Optional<String> nameOpt = event.getUserDisplayName();
+        Optional<String> msgOpt = event.getMessage();
+
+        if (nameOpt.isEmpty() || msgOpt.isEmpty()) {
             return;
         }
 
-        Optional<String> messageId = event.getTagValue("msg-id");
-        boolean isHighlighted = messageId.isPresent() && messageId.get().equals("highlighted-message");
+        String user = nameOpt.get();
+        String message = msgOpt.get();
 
-        String modString = event.getTagValue("mod").orElse("0");
-        boolean mod = modString.equals("1");
+        // ignore nightbot
+        if (event.getUser() != null && event.getUser().getName().equals("nightbot")) {
+            return;
+        }
+        // ignore commands
+        if (message.startsWith("!")) {
+            return;
+        }
 
-        String chatColor = event.getUserChatColor().orElse("#FFFFFF");
+        Optional<String> messageIdTag = event.getTagValue("msg-id");
+        boolean highlighted = messageIdTag.isPresent() && messageIdTag.get().equals("highlighted-message");
 
-        this.sendTwitchMessage(userName, message, chatColor, isHighlighted, mod);
+        Optional<String> modTag = event.getTagValue("isMod");
+        boolean isMod = modTag.isPresent() && modTag.get().equals("1");
+
+        Optional<String> subscriberTag = event.getTagValue("subscriber");
+        boolean isSubscriber = subscriberTag.isPresent() && subscriberTag.get().equals("1");
+
+        Optional<String> bitsTag = event.getTagValue("bits");
+        int bitCount = Integer.parseInt(bitsTag.orElse("0"));
+
+        String colorCode = event.getUserChatColor().orElse("#FFFFFF");
+        int color = Integer.parseInt(colorCode.replace("#", ""), HEX_RADIX);
+
+        this.sendTwitchMessage(new TwitchChatMessage(user, message, color, highlighted, isMod, isSubscriber, bitCount));
     }
 
-    private void sendTwitchMessage(String user, String message, String chatColor, boolean isHighlighted, boolean mod) {
-        MutableText highlight = Text.empty();
-        if (isHighlighted) {
-            highlight = Text.empty().styled(style -> style.withInsertion("twitch_relay_highlighted"));
+    private void sendTwitchMessage(TwitchChatMessage message) {
+        Text prefix = this.formatter.formatPrefix(message);
+
+        MutableText highlightMarker = Text.empty();
+
+        if (message.isHighlighted()) {
+            highlightMarker = this.formatter.getHighlightMarker();
         }
 
-        String prefix = "T";
-        if (mod) {
-            prefix = "TM";
-        }
-
-        MutableText textMessage = Text.empty()
-                .append(Text.literal(prefix).styled(style -> style.withFont(StreamerMode.identifier("twitch_relay"))))
-                .append(Text.literal(" "))
-                .append(highlight
-                        .append(Text.literal(user).styled(style -> style.withColor(Integer.parseInt(chatColor.replace("#", ""), HEX_RADIX))))
+        Text content = Text.empty()
+                .append(highlightMarker
+                        .append(Text.literal(message.user())
+                                .styled(style -> style.withColor(message.userColor()))
+                        )
                         .append(Text.literal(": "))
-                        .append(Text.literal(message))
+                        .append(Text.literal(message.message()))
                 );
 
+        MutableText result = Text.empty()
+                .append(prefix)
+                .append(Text.literal(" "))
+                .append(content);
 
-        StreamerMode.MC.inGameHud.getChatHud().addMessage(textMessage);
+        StreamerMode.MC.inGameHud.getChatHud().addMessage(result);
     }
 
-    public static class Instance {
-        private static final TwitchChatRelay INSTANCE = new TwitchChatRelay();
+    private void sendSystemMessage(String text) {
+        Text sys = Text.literal("[StreamerMode] " + text)
+                .styled(style -> style.withColor(Palette.MINT_LIGHT));
+
+        StreamerMode.MC.inGameHud.getChatHud().addMessage(sys);
     }
 
 }
