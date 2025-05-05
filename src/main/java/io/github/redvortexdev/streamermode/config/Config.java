@@ -84,13 +84,13 @@ public class Config {
     @SerialEntry
     @AutoGen(category = "twitch")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
-    @CustomDescription("Enable Twitch -> Minecraft chat relay.")
+    @CustomDescription("Enable Twitch -> Minecraft chat relay.(if was disabled on launch, restart required)")
     public boolean twitchRelayEnabled = true;
 
     @SerialEntry
     @AutoGen(category = "twitch")
     @StringField
-    @CustomDescription("Channel ID to receive Twitch chat messages from.")
+    @CustomDescription("Channel ID to receive Twitch chat messages from. (requires restart)")
     public String twitchRelayChannel = "jeremaster104";
 
     @SerialEntry

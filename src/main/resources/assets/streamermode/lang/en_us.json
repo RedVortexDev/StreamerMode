@@ -3,6 +3,9 @@
   "yacl3.config.streamermode:config.networkProtocolErrorSuppression": "Network Protocol Error Suppression",
   "yacl3.config.streamermode:config.debugging": "Debugging",
   "yacl3.config.streamermode:config.reportSound": "Incoming Report Sound",
+  "yacl3.config.streamermode:config.category.twitch": "Twitch",
+  "yacl3.config.streamermode:config.twitchRelayEnabled": "Twitch Relay Enabled",
+  "yacl3.config.streamermode:config.twitchRelayChannel": "Twitch Relay Channel",
 
   "yacl3.config.enum.Sound.shield_block": "Shield Block",
   "yacl3.config.enum.Sound.bass_drum": "Bass Drum",
