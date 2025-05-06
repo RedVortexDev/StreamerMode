@@ -2,7 +2,7 @@ package io.github.redvortexdev.streamermode.chat;
 
 import io.github.redvortexdev.streamermode.chat.message.Message;
 import io.github.redvortexdev.streamermode.chat.message.MessageType;
-import net.minecraft.text.Text;
+import net.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,9 +12,9 @@ import java.util.function.Consumer;
 public final class MessageGrabber {
 
     public static final int DEFAULT_TIMEOUT = 1000;
-    private static final List<Text> currentMessages = new ArrayList<>();
+    private static final List<Component> currentMessages = new ArrayList<>();
     private static final List<MessageGrabberTask> tasks = new ArrayList<>();
-    private static Consumer<List<Text>> messageConsumer;
+    private static Consumer<List<Component>> messageConsumer;
     private static int messagesToGrab = 0;
     private static boolean silent = false;
     private static MessageType filter = null;
@@ -23,7 +23,7 @@ public final class MessageGrabber {
     private MessageGrabber() {
     }
 
-    public static void grabSilently(int messages, int time, Consumer<List<Text>> consumer, MessageType filter) {
+    public static void grabSilently(int messages, int time, Consumer<List<Component>> consumer, MessageType filter) {
         if (isActive()) {
             tasks.add(new MessageGrabberTask(messages, consumer, true, filter));
             return;
@@ -50,7 +50,7 @@ public final class MessageGrabber {
             return;
         }
 
-        Text message = msg.getText();
+        Component message = msg.getComponent();
         currentMessages.add(message);
 
         if (silent) {

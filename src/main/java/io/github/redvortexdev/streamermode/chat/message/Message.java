@@ -3,7 +3,8 @@ package io.github.redvortexdev.streamermode.chat.message;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.chat.MessageGrabber;
 import io.github.redvortexdev.streamermode.config.Config;
-import io.github.redvortexdev.streamermode.event.ReceiveSoundEvent;
+import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
+import net.kyori.adventure.text.Component;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -23,8 +24,8 @@ public class Message {
         MessageFinalizers.run(this);
     }
 
-    public Text getText() {
-        return this.text;
+    public Component getComponent() {
+        return this.text.asComponent();
     }
 
     public MessageCheck getCheck() {
@@ -50,7 +51,7 @@ public class Message {
         this.callback.cancel();
 
         if (this.type.getSoundCount() > 0) {
-            ReceiveSoundEvent.cancelNextSound(this.type.getSoundCount());
+            SoundCancelQueue.scheduleCancellation(this.type.getSoundCount());
         }
         MessageGrabber.hide(this.type.getMessageAmount() - 1);
 

@@ -40,7 +40,7 @@ public abstract class MixinDrawContext {
                 // draw the text with a purple backgroundt
                 DrawContext context = (DrawContext) (Object) this;
                 int alpha = (color >> ALPHA_SHIFT) & BYTE_MASK;
-                context.fill(x - 1, y, x + textRenderer.getWidth(text) + 1, y + textRenderer.fontHeight, (alpha << ALPHA_SHIFT) | (Palette.PURPLE.getRgb()));
+                context.fill(x - 1, y, x + textRenderer.getWidth(text) + 1, y + textRenderer.fontHeight, (alpha << ALPHA_SHIFT) | (Palette.PURPLE.value()));
                 return;
             }
         }

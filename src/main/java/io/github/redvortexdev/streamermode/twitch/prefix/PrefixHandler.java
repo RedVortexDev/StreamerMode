@@ -1,10 +1,10 @@
 package io.github.redvortexdev.streamermode.twitch.prefix;
 
 import io.github.redvortexdev.streamermode.twitch.TwitchChatMessage;
-import net.minecraft.text.Text;
+import net.kyori.adventure.text.Component;
 
 public interface PrefixHandler {
 
-    Text getText(TwitchChatMessage message);
+    Component getText(TwitchChatMessage message);
 
 }

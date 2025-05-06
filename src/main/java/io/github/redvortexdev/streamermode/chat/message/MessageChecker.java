@@ -55,7 +55,6 @@ public final class MessageChecker {
     public static MessageType run(Message message) {
         for (MessageCheck check : checks) {
             if (check.check(message, message.getStripped())) {
-                check.onReceive(message);
                 message.setCheck(check);
                 return check.getType();
             }

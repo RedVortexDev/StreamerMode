@@ -3,7 +3,7 @@ package io.github.redvortexdev.streamermode.mixin;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.chat.message.Message;
 import io.github.redvortexdev.streamermode.config.Config;
-import io.github.redvortexdev.streamermode.event.ReceiveSoundEvent;
+import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundFromEntityS2CPacket;
@@ -22,7 +22,7 @@ public class MixinClientPlayNetworkHandler {
         if (Config.instance().debugging) {
             StreamerMode.LOGGER.info("[SOUND] {}", packet.getSound().getKey().get().getValue().getPath());
         }
-        if (StreamerMode.isAllowed() && ReceiveSoundEvent.onEvent()) {
+        if (StreamerMode.isAllowed() && SoundCancelQueue.shouldCancelSound()) {
             if (Config.instance().debugging) {
                 StreamerMode.LOGGER.info("^ Cancelled");
             }
@@ -39,7 +39,13 @@ public class MixinClientPlayNetworkHandler {
             shift = At.Shift.AFTER
     ))
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        if (/* TODO: DFState.isOnDF() && */ StreamerMode.isAllowed()) {
+        // It is likely no other servers will send this.
+        // Nothing wrong will happen if it's faked while already on DiamondFire as the variable is already true.
+        if (packet.content().getString().equals("◆ Welcome back to DiamondFire! ◆")) {
+            StreamerMode.setOnDiamondFire(true);
+        }
+
+        if (StreamerMode.isOnDiamondFire() && StreamerMode.isAllowed()) {
             new Message(packet, ci);
         }
     }

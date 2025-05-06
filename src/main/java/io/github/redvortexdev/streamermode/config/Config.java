@@ -6,13 +6,10 @@ import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.AutoGen;
 import dev.isxander.yacl3.config.v2.api.autogen.Boolean;
 import dev.isxander.yacl3.config.v2.api.autogen.CustomDescription;
-import dev.isxander.yacl3.config.v2.api.autogen.EnumCycler;
 import dev.isxander.yacl3.config.v2.api.autogen.StringField;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings("unused")
@@ -105,54 +102,8 @@ public class Config {
     @CustomDescription("If enabled, the mod will print debug messages to the console.")
     public boolean debugging = false;
 
-    @SerialEntry
-    @AutoGen(category = "misc")
-    @EnumCycler
-    @CustomDescription("The sound to play when a report is received.")
-    public Sound reportSound = Sound.NONE;
-
     public static Config instance() {
         return HANDLER.instance();
-    }
-
-    public enum Sound {
-        SHIELD_BLOCK(SoundEvents.ITEM_SHIELD_BLOCK),
-
-        BASS_DRUM(SoundEvents.BLOCK_NOTE_BLOCK_BASEDRUM.value()),
-        BANJO(SoundEvents.BLOCK_NOTE_BLOCK_BANJO.value()),
-        BASS(SoundEvents.BLOCK_NOTE_BLOCK_BASS.value()),
-        BELL(SoundEvents.BLOCK_NOTE_BLOCK_BELL.value()),
-        BIT(SoundEvents.BLOCK_NOTE_BLOCK_BIT.value()),
-        CHIME(SoundEvents.BLOCK_NOTE_BLOCK_CHIME.value()),
-        COW_BELL(SoundEvents.BLOCK_NOTE_BLOCK_COW_BELL.value()),
-        DIDGERIDOO(SoundEvents.BLOCK_NOTE_BLOCK_DIDGERIDOO.value()),
-        FLUTE(SoundEvents.BLOCK_NOTE_BLOCK_FLUTE.value()),
-        GUITAR(SoundEvents.BLOCK_NOTE_BLOCK_GUITAR.value()),
-        Harp(SoundEvents.BLOCK_NOTE_BLOCK_HARP.value()),
-        PLING(SoundEvents.BLOCK_NOTE_BLOCK_PLING.value()),
-        HAT(SoundEvents.BLOCK_NOTE_BLOCK_HAT.value()),
-        SNARE(SoundEvents.BLOCK_NOTE_BLOCK_SNARE.value()),
-        IRON_XYLOPHONE(SoundEvents.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE.value()),
-        XYLOPHONE(SoundEvents.BLOCK_NOTE_BLOCK_XYLOPHONE.value()),
-
-        EXPERIENCE_ORB_PICKUP(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP),
-        ITEM_PICKUP(SoundEvents.ENTITY_ITEM_PICKUP),
-
-        NONE(null);
-
-        private final SoundEvent sound;
-
-        Sound(SoundEvent sound) {
-            this.sound = sound;
-        }
-
-        public SoundEvent getSound() {
-            return this.sound;
-        }
-
-        public Sound[] getValues() {
-            return values();
-        }
     }
 
 }

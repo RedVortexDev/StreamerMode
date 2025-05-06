@@ -3,24 +3,24 @@ package io.github.redvortexdev.streamermode.twitch.prefix;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.twitch.TwitchChatMessage;
 import io.github.redvortexdev.streamermode.util.Palette;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class BitsPrefixHandler implements PrefixHandler {
 
     @Override
-    public Text getText(TwitchChatMessage message) {
+    public Component getText(TwitchChatMessage message) {
         BitColor bitColor = BitColor.fromBits(message.bitCount());
         if (bitColor == BitColor.NONE) {
-            return Text.empty();
+            return Component.empty();
         }
 
-        return Text.empty().styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(message.bitCount() + " Bits").withColor(bitColor.getColor().getRgb()))))
-                .append(Text.literal(bitColor.getFontLetter())
-                        .styled(style -> style.withFont(StreamerMode.identifier("twitch_relay"))))
-                .append(Text.literal("" + message.bitCount())
-                        .styled(style -> style.withColor(bitColor.getColor()).withBold(true)));
+        return Component.empty().hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(message.bitCount() + " Bits", bitColor.getColor())))
+                .append(Component.text(bitColor.getFontLetter())
+                        .font(StreamerMode.identifier("twitch_relay")))
+                .append(Component.text(message.bitCount(), bitColor.getColor(), TextDecoration.BOLD));
     }
 
     public enum BitColor {
@@ -29,7 +29,7 @@ public class BitsPrefixHandler implements PrefixHandler {
         PURPLE("2", 100, Palette.PURPLE),
         GREEN("3", 1000, Palette.MINT),
         BLUE("4", 5000, Palette.SKY),
-        RED("5", 10000, Palette.SALMON);
+        RED("5", 10000, Palette.RED_LIGHT);
 
         private final String fontLetter;
         private final int bitMinimum;

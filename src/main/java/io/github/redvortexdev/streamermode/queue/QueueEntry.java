@@ -27,12 +27,14 @@ public class QueueEntry {
 
         // Plot ID
         Matcher matcher = ENTRY_PLOT_ID_REGEX.matcher(this.description);
-        if (matcher.find()) try {
+        if (matcher.find()) {
             this.plotId = matcher.group(0);
-        } catch (IndexOutOfBoundsException | IllegalStateException e) {
-            this.plotId = null;
         }
 
+    }
+
+    public static ArrayList<String> getHiddenEntries() {
+        return hiddenEntries;
     }
 
     public boolean isBeta() {
@@ -58,10 +60,6 @@ public class QueueEntry {
 
     public String getPlotId() {
         return this.plotId;
-    }
-
-    public static ArrayList<String> getHiddenEntries() {
-        return hiddenEntries;
     }
 
 }

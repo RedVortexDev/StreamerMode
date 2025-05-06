@@ -5,8 +5,8 @@ import io.github.redvortexdev.streamermode.chat.message.Message;
 import io.github.redvortexdev.streamermode.chat.message.MessageCheck;
 import io.github.redvortexdev.streamermode.chat.message.MessageType;
 import io.github.redvortexdev.streamermode.config.Config;
+import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import io.github.redvortexdev.streamermode.util.chat.ChatType;
-import io.github.redvortexdev.streamermode.util.chat.ChatUtil;
 
 import java.util.regex.PatternSyntaxException;
 
@@ -23,7 +23,7 @@ public class CustomRegexCheck extends MessageCheck {
             return stripped.matches(Config.instance().customRegex);
         } catch (PatternSyntaxException e) {
             StreamerMode.LOGGER.error("Invalid custom regex: {}", Config.instance().customRegex, e);
-            ChatUtil.sendMessage("Invalid custom regex, check console for more info.", ChatType.FAIL);
+            ChatSender.sendMessage("Invalid custom regex, check console for more info.", ChatType.FAIL);
         }
         return false;
     }

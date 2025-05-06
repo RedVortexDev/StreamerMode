@@ -1,36 +1,24 @@
 package io.github.redvortexdev.streamermode.util.chat;
 
-import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.Palette;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
-import net.minecraft.util.Formatting;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public enum ChatType {
 
-    SUCCESS(Palette.MINT_LIGHT, Config.Sound.NONE),
-    INFO(Palette.SKY, Config.Sound.NONE),
-    FAIL(Palette.SALMON, Config.Sound.DIDGERIDOO);
+    SUCCESS(Palette.MINT_LIGHT),
+    INFO(Palette.SKY),
+    FAIL(Palette.RED_LIGHT);
 
     private final TextColor color;
-    private final Config.Sound sound;
 
-    ChatType(TextColor color, Config.Sound sound) {
+    ChatType(TextColor color) {
         this.color = color;
-        this.sound = sound;
     }
 
-    public TextColor getColor() {
-        return this.color;
-    }
-
-    public Config.Sound getSound() {
-        return this.sound;
-    }
-
-    public MutableText getPrefix() {
-        return Text.literal("» ").withColor(this.color.getRgb()).formatted(Formatting.BOLD);
+    public Component getPrefix() {
+        return Component.text("» ", this.color, TextDecoration.BOLD);
     }
 
 }

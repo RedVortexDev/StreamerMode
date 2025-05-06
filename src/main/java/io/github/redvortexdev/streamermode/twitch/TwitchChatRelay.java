@@ -6,38 +6,37 @@ import com.github.twitch4j.chat.events.channel.IRCMessageEvent;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.Palette;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.kyori.adventure.platform.fabric.FabricClientAudiences;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public final class TwitchChatRelay {
 
     public static final int UPDATE_INTERVAL = 20;
-    private static final int HEX_RADIX = 16;
     private static final TwitchChatRelay INSTANCE = new TwitchChatRelay();
-    private final TwitchMessageFormatter formatter;
+    private static final TwitchMessageFormatter FORMATTER = new TwitchMessageFormatter();
+
     private TwitchChat chatClient;
     private boolean connected;
     private String currentChannel;
     private int tickCounter = 0;
 
     private TwitchChatRelay() {
-        this.formatter = new TwitchMessageFormatter();
         this.connected = false;
         this.currentChannel = "";
 
-        String channel = Config.instance()
-                .twitchRelayChannel
-                .trim();
+        CompletableFuture.runAsync(() -> {
+            String channel = Config.instance().twitchRelayChannel.trim();
 
-        if (Config.instance().twitchRelayEnabled && !channel.isEmpty()) {
-            this.createClientIfNeeded();
-            this.connectToChannel(channel);
-            this.sendSystemMessage(
-                    "Twitch relay connected to " + channel
-            );
-        }
+            if (Config.instance().twitchRelayEnabled && !channel.isEmpty()) {
+                this.createClientIfNeeded();
+                this.connectToChannel(channel);
+                this.sendSystemMessage("Twitch relay connecting to " + channel);
+            }
+        });
     }
 
     public static TwitchChatRelay getInstance() {
@@ -50,21 +49,20 @@ public final class TwitchChatRelay {
             return;
         }
         this.tickCounter = 0;
-        this.updateFromConfig();
+        this.updateConnection();
     }
 
-    public void updateFromConfig() {
+    public void updateConnection() {
         boolean enabled = Config.instance().twitchRelayEnabled;
         String channel = Config.instance()
                 .twitchRelayChannel
                 .trim();
 
-        if (enabled && !channel.isEmpty()) {
+        if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
             if (!this.connected) {
                 this.createClientIfNeeded();
                 this.connectToChannel(channel);
                 this.sendSystemMessage("Twitch relay connected to " + channel);
-
             } else if (!channel.equals(this.currentChannel)) {
                 this.switchChannel(channel);
                 this.sendSystemMessage("Twitch relay channel changed to " + channel);
@@ -88,11 +86,13 @@ public final class TwitchChatRelay {
     }
 
     private void connectToChannel(String channel) {
-        this.chatClient.connect();
-        this.chatClient.joinChannel(channel);
-
         this.connected = true;
         this.currentChannel = channel;
+
+        CompletableFuture.runAsync(() -> {
+            this.chatClient.connect();
+            this.chatClient.joinChannel(channel);
+        });
     }
 
     private void switchChannel(String newChannel) {
@@ -149,42 +149,47 @@ public final class TwitchChatRelay {
         int bitCount = Integer.parseInt(bitsTag.orElse("0"));
 
         String colorCode = event.getUserChatColor().orElse("#FFFFFF");
-        int color = Integer.parseInt(colorCode.replace("#", ""), HEX_RADIX);
+        TextColor color = TextColor.fromHexString(colorCode);
 
         this.sendTwitchMessage(new TwitchChatMessage(user, message, color, highlighted, isMod, isSubscriber, bitCount));
     }
 
     private void sendTwitchMessage(TwitchChatMessage message) {
-        Text prefix = this.formatter.formatPrefix(message);
+        Component prefix = FORMATTER.formatPrefix(message);
 
-        MutableText highlightMarker = Text.empty();
+        Component highlightMarker = Component.empty();
 
         if (message.isHighlighted()) {
-            highlightMarker = this.formatter.getHighlightMarker();
+            highlightMarker = FORMATTER.getHighlightMarker();
         }
 
-        Text content = Text.empty()
+        Component content = Component.empty()
                 .append(highlightMarker
-                        .append(Text.literal(message.user())
-                                .styled(style -> style.withColor(message.userColor()))
-                        )
-                        .append(Text.literal(": "))
-                        .append(Text.literal(message.message()))
+                        .append(Component.text(message.user(), message.userColor()))
+                        .append(Component.text(": "))
+                        .append(Component.text(message.message()))
                 );
 
-        MutableText result = Text.empty()
+        Component result = Component.empty()
                 .append(prefix)
-                .append(Text.literal(" "))
+                .append(Component.text(" "))
                 .append(content);
 
-        StreamerMode.MC.inGameHud.getChatHud().addMessage(result);
+        StreamerMode.MC.inGameHud.getChatHud().addMessage(FabricClientAudiences.of().toNative(result));
     }
 
     private void sendSystemMessage(String text) {
-        Text sys = Text.literal("[StreamerMode] " + text)
-                .styled(style -> style.withColor(Palette.MINT_LIGHT));
+        if (StreamerMode.MC.player == null) {
+            StreamerMode.LOGGER.info(text);
+            return;
+        }
 
-        StreamerMode.MC.inGameHud.getChatHud().addMessage(sys);
+        Component message = Component.text("[", Palette.MINT)
+                .append(Component.text("Twitch Relay", Palette.MINT_LIGHT))
+                .append(Component.text("] ", Palette.MINT))
+                .append(Component.text(text, Palette.SKY_LIGHT));
+
+        StreamerMode.MC.player.sendMessage(FabricClientAudiences.of().toNative(message));
     }
 
 }

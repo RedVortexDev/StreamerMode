@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.8-SNAPSHOT'
+    id 'fabric-loom' version '1.10-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -12,22 +12,23 @@ base {
 
 
 repositories {
-    // DevAuth.
-    maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
     // YetAnotherConfigLib.
     maven {
         name 'Xander Maven'
         url 'https://maven.isxander.dev/releases'
     }
+
     // ModMenu.
     maven {
         name 'Terraformers'
         url 'https://maven.terraformersmc.com/'
     }
+
+    // DevAuth.
+    maven { url = "https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1" }
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
@@ -35,10 +36,15 @@ dependencies {
     // Fabric API.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
+    // Adventure.
+    modImplementation include("net.kyori:adventure-platform-fabric:${project.adventure_version}") {
+        exclude group: "net.fabricmc.fabric-api"
+    }
+
     // YetAnotherConfigLib.
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
-    // Twitch4J
+    // Twitch4J.
     implementation 'com.github.twitch4j:twitch4j:1.24.0'
 
     // ModMenu.
@@ -61,7 +67,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
     // ensure that the encoding is set to UTF-8, no matter what the system default is
     // this fixes some edge cases with special characters not displaying correctly

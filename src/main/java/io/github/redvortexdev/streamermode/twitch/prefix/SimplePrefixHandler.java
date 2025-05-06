@@ -3,8 +3,8 @@ package io.github.redvortexdev.streamermode.twitch.prefix;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.twitch.TwitchChatMessage;
 import io.github.redvortexdev.streamermode.util.Palette;
-import net.minecraft.text.HoverEvent;
-import net.minecraft.text.Text;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.HoverEvent;
 
 public class SimplePrefixHandler implements PrefixHandler {
 
@@ -17,10 +17,10 @@ public class SimplePrefixHandler implements PrefixHandler {
     }
 
     @Override
-    public Text getText(TwitchChatMessage message) {
-        return Text.literal(this.prefix)
-                .styled(style -> style.withFont(StreamerMode.identifier("twitch_relay"))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(this.description).withColor(Palette.PURPLE.getRgb()))));
+    public Component getText(TwitchChatMessage message) {
+        return Component.text(this.prefix)
+                .font(StreamerMode.identifier("twitch_relay"))
+                .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(this.description, Palette.PURPLE)));
     }
 
 }
