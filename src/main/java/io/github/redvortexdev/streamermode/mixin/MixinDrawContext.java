@@ -37,7 +37,7 @@ public abstract class MixinDrawContext {
         // Scan for an insert component of "twitch_relay_highlighted"
         for (Text sibling : mutableText.getSiblings()) {
             if (sibling.getStyle().getInsertion() != null && sibling.getStyle().getInsertion().equals("twitch_relay_highlighted")) {
-                // draw the text with a purple backgroundt
+                // draw the text with a purple background
                 DrawContext context = (DrawContext) (Object) this;
                 int alpha = (color >> ALPHA_SHIFT) & BYTE_MASK;
                 context.fill(x - 1, y, x + textRenderer.getWidth(text) + 1, y + textRenderer.fontHeight, (alpha << ALPHA_SHIFT) | (Palette.PURPLE.value()));

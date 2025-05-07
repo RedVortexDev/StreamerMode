@@ -5,7 +5,8 @@ import com.github.twitch4j.chat.TwitchChatBuilder;
 import com.github.twitch4j.chat.events.channel.IRCMessageEvent;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
-import io.github.redvortexdev.streamermode.util.Palette;
+import io.github.redvortexdev.streamermode.util.chat.ChatSender;
+import io.github.redvortexdev.streamermode.util.chat.ChatType;
 import net.kyori.adventure.platform.fabric.FabricClientAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -29,12 +30,12 @@ public final class TwitchChatRelay {
         this.currentChannel = "";
 
         CompletableFuture.runAsync(() -> {
-            String channel = Config.instance().twitchRelayChannel.trim();
+            String channel = Config.getInstance().getTwitchRelayChannel().trim();
 
-            if (Config.instance().twitchRelayEnabled && !channel.isEmpty()) {
+            if (Config.getInstance().isTwitchRelayEnabled() && !channel.isEmpty()) {
                 this.createClientIfNeeded();
                 this.connectToChannel(channel);
-                this.sendSystemMessage("Twitch relay connecting to " + channel);
+                ChatSender.sendMessage("Twitch relay connecting to " + channel, ChatType.INFO);
             }
         });
     }
@@ -53,24 +54,22 @@ public final class TwitchChatRelay {
     }
 
     public void updateConnection() {
-        boolean enabled = Config.instance().twitchRelayEnabled;
-        String channel = Config.instance()
-                .twitchRelayChannel
-                .trim();
+        boolean enabled = Config.getInstance().isTwitchRelayEnabled();
+        String channel = Config.getInstance().getTwitchRelayChannel().trim();
 
         if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
             if (!this.connected) {
                 this.createClientIfNeeded();
                 this.connectToChannel(channel);
-                this.sendSystemMessage("Twitch relay connected to " + channel);
+                ChatSender.sendMessage("Twitch relay connected to " + channel, ChatType.INFO);
             } else if (!channel.equals(this.currentChannel)) {
                 this.switchChannel(channel);
-                this.sendSystemMessage("Twitch relay channel changed to " + channel);
+                ChatSender.sendMessage("Twitch relay channel changed to " + channel, ChatType.INFO);
             }
         } else {
             if (this.connected) {
                 this.disconnect();
-                this.sendSystemMessage("Twitch relay disconnected");
+                ChatSender.sendMessage("Twitch relay disconnected", ChatType.INFO);
             }
         }
     }
@@ -113,7 +112,7 @@ public final class TwitchChatRelay {
     }
 
     private void onChatMessage(IRCMessageEvent event) {
-        if (!Config.instance().twitchRelayEnabled) {
+        if (!Config.getInstance().isTwitchRelayEnabled()) {
             return;
         }
 
@@ -176,20 +175,6 @@ public final class TwitchChatRelay {
                 .append(content);
 
         StreamerMode.MC.inGameHud.getChatHud().addMessage(FabricClientAudiences.of().toNative(result));
-    }
-
-    private void sendSystemMessage(String text) {
-        if (StreamerMode.MC.player == null) {
-            StreamerMode.LOGGER.info(text);
-            return;
-        }
-
-        Component message = Component.text("[", Palette.MINT)
-                .append(Component.text("Twitch Relay", Palette.MINT_LIGHT))
-                .append(Component.text("] ", Palette.MINT))
-                .append(Component.text(text, Palette.SKY_LIGHT));
-
-        StreamerMode.MC.player.sendMessage(FabricClientAudiences.of().toNative(message));
     }
 
 }

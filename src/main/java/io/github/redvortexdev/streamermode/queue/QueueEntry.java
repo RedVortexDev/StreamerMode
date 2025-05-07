@@ -1,36 +1,38 @@
 package io.github.redvortexdev.streamermode.queue;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueueEntry {
 
-    private static final Pattern ENTRY_PLOT_ID_REGEX = Pattern.compile("^[a-z0-9-]+");
-    private static final String DESCRIPTION_REGEX = "^\\d+\\. ";
+    private static final Pattern ENTRY_REGEX = Pattern.compile("^\\d+\\. (?<id>[a-z][a-z0-9-]{2,19}|[0-9]+) [ -]*(?<description>.+)$");
     private static final ArrayList<String> hiddenEntries = new ArrayList<>();
 
     private final boolean beta;
-    private final Integer position;
+    private final int position;
     private final String description;
-    private String plotId;
+    private final String plotId;
 
-    public QueueEntry(String rawEntry, int i) {
-        // Contains Beta
-        this.beta = rawEntry.toLowerCase().contains("beta");
+    public QueueEntry(int position, String plotId, String description, boolean beta) {
+        this.position = position;
+        this.plotId = plotId;
+        this.description = description;
+        this.beta = beta;
+    }
 
-        // Description (Full entry excluding position)
-        this.description = rawEntry.replaceFirst(DESCRIPTION_REGEX, "");
-
-        // Queue Position
-        this.position = i;
-
-        // Plot ID
-        Matcher matcher = ENTRY_PLOT_ID_REGEX.matcher(this.description);
-        if (matcher.find()) {
-            this.plotId = matcher.group(0);
+    public static QueueEntry of(String rawEntry, int position) {
+        Matcher matcher = ENTRY_REGEX.matcher(rawEntry);
+        if (!matcher.find()) {
+            return null;
         }
 
+        String plotId = matcher.group("id");
+        String description = matcher.group("description").trim();
+        boolean beta = description.toLowerCase(Locale.ROOT).contains("node beta");
+
+        return new QueueEntry(position, plotId, description, beta);
     }
 
     public static ArrayList<String> getHiddenEntries() {
@@ -41,17 +43,8 @@ public class QueueEntry {
         return this.beta;
     }
 
-    private String getDescription() {
+    public String getDescription() {
         return this.description;
-    }
-
-    public String getStrippedDescription() {
-        try {
-            return this.getDescription().replaceAll(this.getPlotId(), "").replaceFirst("^( |-)+|\\1$", "") // ??
-                    .trim();
-        } catch (NullPointerException e) {
-            return this.getDescription().trim();
-        }
     }
 
     public Integer getPosition() {

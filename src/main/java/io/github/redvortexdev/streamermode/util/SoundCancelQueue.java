@@ -7,7 +7,7 @@ public final class SoundCancelQueue {
     private SoundCancelQueue() {
     }
 
-    public static void scheduleCancellation(int amount) {
+    public static void queueCancellation(int amount) {
         pendingCancellations += amount;
     }
 

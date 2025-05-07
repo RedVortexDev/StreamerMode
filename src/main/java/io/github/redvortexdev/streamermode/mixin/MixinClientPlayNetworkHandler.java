@@ -1,9 +1,11 @@
 package io.github.redvortexdev.streamermode.mixin;
 
 import io.github.redvortexdev.streamermode.StreamerMode;
-import io.github.redvortexdev.streamermode.chat.message.Message;
 import io.github.redvortexdev.streamermode.config.Config;
+import io.github.redvortexdev.streamermode.message.Message;
 import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
+import io.github.redvortexdev.streamermode.util.chat.ChatSender;
+import io.github.redvortexdev.streamermode.util.chat.ChatType;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlaySoundFromEntityS2CPacket;
@@ -19,16 +21,16 @@ public class MixinClientPlayNetworkHandler {
     public void onPlaySound(PlaySoundFromEntityS2CPacket packet, CallbackInfo ci) {
         // The support leave message is sent after the sound play, left in debugging code
         // to be able to confirm this in the future if the bug is fixed.
-        if (Config.instance().debugging) {
+        if (Config.getInstance().isDebugging()) {
             StreamerMode.LOGGER.info("[SOUND] {}", packet.getSound().getKey().get().getValue().getPath());
         }
-        if (StreamerMode.isAllowed() && SoundCancelQueue.shouldCancelSound()) {
-            if (Config.instance().debugging) {
+        if (StreamerMode.isStreamingAllowed() && SoundCancelQueue.shouldCancelSound()) {
+            if (Config.getInstance().isDebugging()) {
                 StreamerMode.LOGGER.info("^ Cancelled");
             }
             ci.cancel();
         } else {
-            if (Config.instance().debugging) {
+            if (Config.getInstance().isDebugging()) {
                 StreamerMode.LOGGER.info("^ Not cancelled");
             }
         }
@@ -40,14 +42,18 @@ public class MixinClientPlayNetworkHandler {
     ))
     public void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
         // It is likely no other servers will send this.
-        // Nothing wrong will happen if it's faked while already on DiamondFire as the variable is already true.
+        // Nothing bad will happen if it's faked while already on DiamondFire as the variable is already true.
         if (packet.content().getString().equals("◆ Welcome back to DiamondFire! ◆")) {
             StreamerMode.setOnDiamondFire(true);
+            if (!StreamerMode.isStreamingAllowed() && Config.getInstance().isNonStreamerJoinNotice()) {
+                ChatSender.sendMessage("Streamer-only features are disabled (suppress in config)", ChatType.INFO);
+            }
         }
 
-        if (StreamerMode.isOnDiamondFire() && StreamerMode.isAllowed()) {
+        if (StreamerMode.isOnDiamondFire() && StreamerMode.isStreamingAllowed()) {
             new Message(packet, ci);
         }
+
     }
 
 }

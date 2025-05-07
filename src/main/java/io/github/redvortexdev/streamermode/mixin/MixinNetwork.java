@@ -14,7 +14,7 @@ public class MixinNetwork {
 
     @Inject(method = {"onPacketException"}, at = {@At("HEAD")}, cancellable = true)
     private void onPacketException(Packet<?> packet, Exception exception, CallbackInfo ci) {
-        if (Config.instance().networkProtocolErrorSuppression) {
+        if (Config.getInstance().isNetworkProtocolErrorSuppression()) {
             StreamerMode.LOGGER.error("Network Protocol Error suppressed for {}", packet, exception);
             ci.cancel();
         }
