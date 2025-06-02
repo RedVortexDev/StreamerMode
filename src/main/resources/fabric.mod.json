@@ -27,6 +27,7 @@
 
   "depends": {
     "yet_another_config_lib_v3": "*",
+    "twitch4j": "${twitch4j_version}",
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"

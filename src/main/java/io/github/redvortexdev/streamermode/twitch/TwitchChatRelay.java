@@ -7,6 +7,7 @@ import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import io.github.redvortexdev.streamermode.util.chat.ChatType;
+import io.github.redvortexdev.streamermode.util.chat.SectionSanitizer;
 import net.kyori.adventure.platform.fabric.FabricClientAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -116,15 +117,15 @@ public final class TwitchChatRelay {
             return;
         }
 
-        Optional<String> nameOpt = event.getUserDisplayName();
-        Optional<String> msgOpt = event.getMessage();
+        Optional<String> nameOptional = event.getUserDisplayName();
+        Optional<String> messageOptional = event.getMessage();
 
-        if (nameOpt.isEmpty() || msgOpt.isEmpty()) {
+        if (nameOptional.isEmpty() || messageOptional.isEmpty()) {
             return;
         }
 
-        String user = nameOpt.get();
-        String message = msgOpt.get();
+        String user = nameOptional.get();
+        String message = SectionSanitizer.sanitize(messageOptional.get());
 
         // ignore nightbot
         if (event.getUser() != null && event.getUser().getName().equals("nightbot")) {

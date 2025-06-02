@@ -18,6 +18,9 @@ repositories {
         url 'https://maven.isxander.dev/releases'
     }
 
+    // Twitch4J.
+    maven { url "https://maven.awakenedredstone.com"}
+
     // ModMenu.
     maven {
         name 'Terraformers'
@@ -45,7 +48,7 @@ dependencies {
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
     // Twitch4J.
-    implementation 'com.github.twitch4j:twitch4j:1.24.0'
+    modImplementation "com.github.twitch4j:twitch4j-fabric:${project.twitch4j_version}"
 
     // ModMenu.
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
@@ -58,12 +61,14 @@ processResources {
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
+    inputs.property "twitch4j_version", project.twitch4j_version
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+                "loader_version": project.loader_version,
+                "twitch4j_version": project.twitch4j_version
     }
 }
 
