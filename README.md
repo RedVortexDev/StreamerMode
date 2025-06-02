@@ -4,7 +4,7 @@
 
 A 1.21.1 Fabric mod for official DiamondFire streaming and content creation.
 
-# Dependencies
+## Dependencies
 1. [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
 2. [Twitch4J](https://modrinth.com/mod/twitch4j)
 
