@@ -8,7 +8,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import io.github.redvortexdev.streamermode.util.chat.ChatType;
 import io.github.redvortexdev.streamermode.util.chat.SectionSanitizer;
-import net.kyori.adventure.platform.fabric.FabricClientAudiences;
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 
@@ -175,7 +175,7 @@ public final class TwitchChatRelay {
                 .append(Component.text(" "))
                 .append(content);
 
-        StreamerMode.MC.inGameHud.getChatHud().addMessage(FabricClientAudiences.of().toNative(result));
+        StreamerMode.MC.inGameHud.getChatHud().addMessage(MinecraftClientAudiences.of().asNative(result));
     }
 
 }

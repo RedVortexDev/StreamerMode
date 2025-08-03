@@ -5,6 +5,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.processor.MessageProcessorRunner;
 import io.github.redvortexdev.streamermode.message.processor.impl.MessageHider;
 import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.text.Text;
@@ -27,7 +28,7 @@ public class Message {
     }
 
     public Component getComponent() {
-        return this.text.asComponent();
+        return MinecraftClientAudiences.of().asAdventure(this.text);
     }
 
     public String getStripped() {

@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 
 public class TwitchMessageFormatter {
 
+    public static final String HIGHLIGHT_MARKER = "twitch_relay_highlighted_silly_hack_to_inject_metadata";
     private final PrefixHandler defaultPrefix = new SimplePrefixHandler("T", "Twitch Relay");
     private final PrefixHandler modPrefix = new SimplePrefixHandler("M", "Moderator");
     private final PrefixHandler subscriberPrefix = new SimplePrefixHandler("S", "Subscriber");
@@ -33,7 +34,7 @@ public class TwitchMessageFormatter {
     }
 
     public Component getHighlightMarker() {
-        return Component.empty().insertion("twitch_relay_highlighted");
+        return Component.empty().insertion(HIGHLIGHT_MARKER);
     }
 
 }

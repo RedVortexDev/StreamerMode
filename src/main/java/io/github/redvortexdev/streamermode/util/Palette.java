@@ -12,7 +12,8 @@ public final class Palette {
     public static final TextColor RED = TextColor.color(0xf87171);
     public static final TextColor RED_LIGHT = TextColor.color(0xfca5a5);
     public static final TextColor RED_LIGHT_2 = TextColor.color(0xfee2e2);
-    public static final TextColor PURPLE = TextColor.color(0xe879f9);
+    public static final TextColor PURPLE = TextColor.color(0x755ebc);
+    public static final TextColor PURPLE_LIGHT = TextColor.color(0xCABBFC);
     public static final TextColor GRAY = TextColor.color(0x64748b);
     public static final TextColor GRAY_LIGHT = TextColor.color(0xcbd5e1);
 

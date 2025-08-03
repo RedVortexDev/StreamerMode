@@ -1,5 +1,6 @@
 package io.github.redvortexdev.streamermode.mixin;
 
+import io.github.redvortexdev.streamermode.twitch.TwitchMessageFormatter;
 import io.github.redvortexdev.streamermode.util.Palette;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -20,7 +21,7 @@ public abstract class MixinDrawContext {
     @Unique
     private static final int BYTE_MASK = 0xFF;
 
-    @Inject(method = "drawTextWithShadow(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/OrderedText;III)I", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "drawTextWithShadow(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/OrderedText;III)I", at = @At("HEAD"))
     public void streamerMode$drawTextWithShadow(TextRenderer textRenderer, OrderedText text, int x, int y, int color, CallbackInfoReturnable<Integer> cir) {
         this.drawPurpleBackground(textRenderer, text, x, y, color);
     }
@@ -34,9 +35,9 @@ public abstract class MixinDrawContext {
         });
         MutableText mutableText = mutableTexts[0];
 
-        // Scan for an insert component of "twitch_relay_highlighted"
+        // Scan for an insert component of TwitchMessageFormatter.HIGHLIGHT_MARKER
         for (Text sibling : mutableText.getSiblings()) {
-            if (sibling.getStyle().getInsertion() != null && sibling.getStyle().getInsertion().equals("twitch_relay_highlighted")) {
+            if (sibling.getStyle().getInsertion() != null && sibling.getStyle().getInsertion().equals(TwitchMessageFormatter.HIGHLIGHT_MARKER)) {
                 // draw the text with a purple background
                 DrawContext context = (DrawContext) (Object) this;
                 int alpha = (color >> ALPHA_SHIFT) & BYTE_MASK;

@@ -1,7 +1,7 @@
 package io.github.redvortexdev.streamermode.util.chat;
 
 import io.github.redvortexdev.streamermode.StreamerMode;
-import net.kyori.adventure.platform.fabric.FabricClientAudiences;
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.Component;
 
 public final class ChatSender {
@@ -15,7 +15,7 @@ public final class ChatSender {
 
     public static void sendMessage(Component message, ChatType type) {
         if (StreamerMode.MC.player == null) {
-            StreamerMode.LOGGER.info(FabricClientAudiences.of().toNative(message).getString());
+            StreamerMode.LOGGER.info(MinecraftClientAudiences.of().asNative(message).getString());
             return;
         }
         StreamerMode.MC.player.sendMessage(Component.empty()

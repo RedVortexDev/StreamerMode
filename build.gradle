@@ -40,10 +40,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // Adventure.
-    modImplementation include("net.kyori:adventure-platform-fabric:${project.adventure_version}") {
-        exclude group: "net.fabricmc.fabric-api"
-    }
-
+    modImplementation include("net.kyori:adventure-platform-fabric:${project.adventure_version}")
     // YetAnotherConfigLib.
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 

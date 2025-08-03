@@ -4,7 +4,7 @@ import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.Message;
 import io.github.redvortexdev.streamermode.message.processor.MessageProcessor;
-import net.kyori.adventure.platform.fabric.FabricClientAudiences;
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.minecraft.text.Text;
 
 public class MessageDebugLogger extends MessageProcessor {
@@ -15,7 +15,7 @@ public class MessageDebugLogger extends MessageProcessor {
             if (StreamerMode.MC.world == null) {
                 return;
             }
-            StreamerMode.LOGGER.info(Text.Serialization.toJsonString(FabricClientAudiences.of().toNative(message.getComponent()), StreamerMode.MC.world.getRegistryManager()));
+            StreamerMode.LOGGER.info(Text.Serialization.toJsonString(MinecraftClientAudiences.of().asNative(message.getComponent()), StreamerMode.MC.world.getRegistryManager()));
         }
     }
 

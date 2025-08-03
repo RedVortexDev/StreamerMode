@@ -91,7 +91,7 @@ public final class QueueCommand {
                                 StreamerMode.MC.player.sendMessage(entryMessage);
                             }
 
-                            StreamerMode.MC.player.sendMessage(Text.empty());
+                            StreamerMode.MC.player.sendMessage(Component.empty());
                         });
                     } catch (IOException e) {
                         StreamerMode.MC.player.sendMessage(Component.text("Error while requesting", Palette.RED));
