@@ -1,5 +1,6 @@
 package io.github.redvortexdev.streamermode.message.processor.impl;
 
+import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.Message;
 import io.github.redvortexdev.streamermode.message.MessageCheckType;
 import io.github.redvortexdev.streamermode.message.check.DirectMessageCheck;
@@ -14,10 +15,8 @@ public class DirectMessageFilter extends MessageProcessor {
 
     @Override
     protected void handle(Message message) {
-        if (message.getPassedCheckType() == MessageCheckType.DIRECT_MESSAGE && !isUserAllowedDirectMessage(message)) {
+        if (Config.getInstance().isHideDMs() && message.getPassedCheckType() == MessageCheckType.DIRECT_MESSAGE && !isUserAllowedDirectMessage(message)) {
             message.hide(); // hide if the message is a direct message and the user is not allowed
-        } else if (message.getPassedCheckType() != MessageCheckType.NONE) {
-            message.hide(); // hide if any check passed
         }
     }
 
