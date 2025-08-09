@@ -34,12 +34,6 @@ public final class StreamerAllowlist {
     }
 
     public static boolean isPlayerAllowed(String name) {
-        System.out.println(name);
-        System.out.println(ALLOWED_PLAYERS.stream().anyMatch(player -> player.name.equalsIgnoreCase(name)));
-        // Let contributors use the mod in development environment.
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            return true;
-        }
         return ALLOWED_PLAYERS.stream().anyMatch(player -> player.name.equalsIgnoreCase(name));
     }
 
