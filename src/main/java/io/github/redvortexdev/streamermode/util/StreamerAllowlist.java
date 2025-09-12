@@ -16,7 +16,8 @@ public final class StreamerAllowlist {
             new AllowedPlayer("Maximization", "4a605151-5260-4ea9-9224-4be2d600dddf"),
             new AllowedPlayer("Electrosolt", "cadf53b3-2a42-4119-9ebd-cec6fada6305"),
             new AllowedPlayer("RedVortx", "fc513f92-b662-46e2-ada3-0a3eb73808a3"),
-            new AllowedPlayer("GeorgeRNG", "901c4cd0-98b9-4d3d-a8e9-08d15c6a4472")
+            new AllowedPlayer("GeorgeRNG", "901c4cd0-98b9-4d3d-a8e9-08d15c6a4472"),
+            new AllowedPlayer("TheFoxPlush", "a3875f0b-db89-4d17-bc33-b51c3b84400d")
     );
 
     private StreamerAllowlist() {
