@@ -60,7 +60,7 @@ public final class MessageChecker {
      */
     public static MessageCheckType getPassedMessageTypeCheck(Message message) {
         for (MessageCheck check : MESSAGE_CHECKS) {
-            if (check.passesCheck(message)) {
+            if (check.isCheckEnabled() && check.passesCheck(message)) {
                 return check.getMessageType();
             }
         }

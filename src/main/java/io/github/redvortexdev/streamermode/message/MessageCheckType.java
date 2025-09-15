@@ -2,7 +2,7 @@ package io.github.redvortexdev.streamermode.message;
 
 public enum MessageCheckType {
 
-    NONE,
+    NONE(0),
 
     // General
     DIRECT_MESSAGE(1, 1),
@@ -35,7 +35,7 @@ public enum MessageCheckType {
     private final int soundCount;
 
     MessageCheckType() {
-        this(0);
+        this(1);
     }
 
     MessageCheckType(int messageAmount) {

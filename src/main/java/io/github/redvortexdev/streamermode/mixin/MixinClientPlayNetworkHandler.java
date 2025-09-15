@@ -21,16 +21,16 @@ public class MixinClientPlayNetworkHandler {
     public void onPlaySound(PlaySoundFromEntityS2CPacket packet, CallbackInfo ci) {
         // The support leave message is sent after the sound play, left in debugging code
         // to be able to confirm this in the future if the bug is fixed.
-        if (Config.getInstance().isDebugging()) {
+        if (Config.HANDLER.instance().debugging) {
             StreamerMode.LOGGER.info("[SOUND] {}", packet.getSound().getKey().get().getValue().getPath());
         }
         if (StreamerMode.isStreamingAllowed() && SoundCancelQueue.shouldCancelSound()) {
-            if (Config.getInstance().isDebugging()) {
+            if (Config.HANDLER.instance().debugging) {
                 StreamerMode.LOGGER.info("^ Cancelled");
             }
             ci.cancel();
         } else {
-            if (Config.getInstance().isDebugging()) {
+            if (Config.HANDLER.instance().debugging) {
                 StreamerMode.LOGGER.info("^ Not cancelled");
             }
         }
@@ -45,7 +45,7 @@ public class MixinClientPlayNetworkHandler {
         // Nothing bad will happen if it's faked while already on DiamondFire as the variable is already true.
         if (packet.content().getString().equals("◆ Welcome back to DiamondFire! ◆")) {
             StreamerMode.setOnDiamondFire(true);
-            if (!StreamerMode.isStreamingAllowed() && Config.getInstance().isNonStreamerJoinNotice()) {
+            if (!StreamerMode.isStreamingAllowed() && Config.HANDLER.instance().nonStreamerJoinNotice) {
                 ChatSender.sendMessage("Streamer-only features are disabled (suppress in config)", ChatType.INFO);
             }
         }

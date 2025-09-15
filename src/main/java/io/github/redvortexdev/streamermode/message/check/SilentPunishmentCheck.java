@@ -19,7 +19,7 @@ public class SilentPunishmentCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHideModeration();
+        return Config.HANDLER.instance().hideModeration;
     }
 
 }

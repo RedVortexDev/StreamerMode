@@ -7,7 +7,7 @@ public class ModMenuIntegration implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parentScreen -> Config.getInstance().generateConfig().generateScreen(parentScreen);
+        return parentScreen -> Config.HANDLER.generateGui().generateScreen(parentScreen);
     }
 
 }

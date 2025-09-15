@@ -19,7 +19,7 @@ public class AdminCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHideAdmin();
+        return Config.HANDLER.instance().hideAdmin;
     }
 
 }

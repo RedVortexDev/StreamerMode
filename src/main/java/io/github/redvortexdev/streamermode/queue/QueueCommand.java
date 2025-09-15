@@ -31,7 +31,7 @@ public final class QueueCommand {
 
     public static void registerQueueCommand(CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(ClientCommandManager.literal("streamermode").executes(ctx -> {
-            StreamerMode.setQueuedScreen(Config.getInstance().generateConfig().generateScreen(null));
+            StreamerMode.setQueuedScreen(Config.HANDLER.generateGui().generateScreen(null));
             return 0;
         }));
 

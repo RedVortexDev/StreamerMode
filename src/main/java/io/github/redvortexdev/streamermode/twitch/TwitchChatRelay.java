@@ -31,9 +31,9 @@ public final class TwitchChatRelay {
         this.currentChannel = "";
 
         CompletableFuture.runAsync(() -> {
-            String channel = Config.getInstance().getTwitchRelayChannel().trim();
+            String channel = Config.HANDLER.instance().twitchRelayChannel.trim();
 
-            if (Config.getInstance().isTwitchRelayEnabled() && !channel.isEmpty()) {
+            if (Config.HANDLER.instance().twitchRelayEnabled && !channel.isEmpty()) {
                 this.createClientIfNeeded();
                 this.connectToChannel(channel);
                 ChatSender.sendMessage("Twitch relay connecting to " + channel, ChatType.INFO);
@@ -55,8 +55,8 @@ public final class TwitchChatRelay {
     }
 
     public void updateConnection() {
-        boolean enabled = Config.getInstance().isTwitchRelayEnabled();
-        String channel = Config.getInstance().getTwitchRelayChannel().trim();
+        boolean enabled = Config.HANDLER.instance().twitchRelayEnabled;
+        String channel = Config.HANDLER.instance().twitchRelayChannel.trim();
 
         if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
             if (!this.connected) {
@@ -113,7 +113,7 @@ public final class TwitchChatRelay {
     }
 
     private void onChatMessage(IRCMessageEvent event) {
-        if (!Config.getInstance().isTwitchRelayEnabled()) {
+        if (!Config.HANDLER.instance().twitchRelayEnabled) {
             return;
         }
 

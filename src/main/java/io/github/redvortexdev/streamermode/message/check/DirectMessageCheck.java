@@ -32,7 +32,7 @@ public class DirectMessageCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHideDMs();
+        return Config.HANDLER.instance().hideDMs;
     }
 
 }

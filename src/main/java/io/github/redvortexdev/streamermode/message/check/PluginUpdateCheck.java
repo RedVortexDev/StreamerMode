@@ -27,7 +27,7 @@ public class PluginUpdateCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHidePluginUpdate();
+        return Config.HANDLER.instance().hidePluginUpdate;
     }
 
 }

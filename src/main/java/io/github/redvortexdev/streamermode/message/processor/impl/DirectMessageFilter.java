@@ -15,8 +15,8 @@ public class DirectMessageFilter extends MessageProcessor {
 
     @Override
     protected void handle(Message message) {
-        if (Config.getInstance().isHideDMs() && message.getPassedCheckType() == MessageCheckType.DIRECT_MESSAGE && !isUserAllowedDirectMessage(message)) {
-            message.hide(); // hide if the message is a direct message and the user is not allowed
+        if (Config.HANDLER.instance().hideDMs && message.getPassedCheckType() == MessageCheckType.DIRECT_MESSAGE && !isUserAllowedDirectMessage(message)) {
+            message.cancel(); // hide if the message is a direct message and the user is not allowed
         }
     }
 

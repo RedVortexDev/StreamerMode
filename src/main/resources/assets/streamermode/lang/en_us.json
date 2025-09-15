@@ -1,19 +1,56 @@
 {
-  "yacl3.config.streamermode:config.category.misc": "Miscellaneous",
-  "yacl3.config.streamermode:config.networkProtocolErrorSuppression": "Network Protocol Error Suppression",
-  "yacl3.config.streamermode:config.debugging": "Debugging",
-  "yacl3.config.streamermode:config.category.twitch": "Twitch",
-  "yacl3.config.streamermode:config.twitchRelayEnabled": "Twitch Relay Enabled",
-  "yacl3.config.streamermode:config.twitchRelayChannel": "Twitch Relay Channel",
+  "yacl3.config.streamermode:config.title": "Streamer Mode Configuration",
 
-  "yacl3.config.streamermode:config.category.hiding": "Chat Hiding",
-  "yacl3.config.streamermode:config.hideAdmin": "Admin Hiding",
-  "yacl3.config.streamermode:config.hideModeration": "Moderation Hiding",
-  "yacl3.config.streamermode:config.hideSupport": "Support Hiding",
-  "yacl3.config.streamermode:config.hideDMs": "Direct Message Hiding",
-  "yacl3.config.streamermode:config.hidePlotAds": "Plot Ad Hiding",
-  "yacl3.config.streamermode:config.hidePlotBoosts": "Plot Boosts Hiding",
-  "yacl3.config.streamermode:config.hideSpy": "Spy Hiding",
-  "yacl3.config.streamermode:config.hidePluginUpdate": "Plugin Update Hiding",
-  "yacl3.config.streamermode:config.customRegex": "Custom Regex Hiding"
+  "yacl3.config.streamermode:config.category.hiding": "Hiding",
+  "yacl3.config.streamermode:config.category.hiding.group.types": "Hide Message Types (Streamer Only)",
+  "yacl3.config.streamermode:config.category.hiding.group.types.desc": "Control which types of messages to hide while streaming.",
+
+  "yacl3.config.streamermode:config.hideAdmin": "Hide Admin Messages",
+  "yacl3.config.streamermode:config.hideAdmin.desc": "If enabled, admin messages will be hidden.",
+
+  "yacl3.config.streamermode:config.hideModeration": "Hide Moderation Messages",
+  "yacl3.config.streamermode:config.hideModeration.desc": "If enabled, moderation-related messages will be hidden.",
+
+  "yacl3.config.streamermode:config.hideSupport": "Hide Support Messages",
+  "yacl3.config.streamermode:config.hideSupport.desc": "If enabled, support-related messages will be hidden.",
+
+  "yacl3.config.streamermode:config.hideDMs": "Hide Direct Messages",
+  "yacl3.config.streamermode:config.hideDMs.desc": "If enabled, direct messages from players will be hidden.",
+
+  "yacl3.config.streamermode:config.hidePlotAds": "Hide Plot Advertisements",
+  "yacl3.config.streamermode:config.hidePlotAds.desc": "If enabled, plot advertisements will be hidden.",
+
+  "yacl3.config.streamermode:config.hidePlotBoosts": "Hide Plot Boosts",
+  "yacl3.config.streamermode:config.hidePlotBoosts.desc": "If enabled, plot boosts will be hidden.",
+
+  "yacl3.config.streamermode:config.hideSpy": "Hide Spy Features",
+  "yacl3.config.streamermode:config.hideSpy.desc": "If enabled, session, DM, and muted spies will be hidden.",
+
+  "yacl3.config.streamermode:config.hidePluginUpdate": "Hide Plugin Update Messages",
+  "yacl3.config.streamermode:config.hidePluginUpdate.desc": "If enabled, update messages will be hidden.",
+
+  "yacl3.config.streamermode:config.customRegex": "Custom Hide Regex",
+  "yacl3.config.streamermode:config.customRegex.desc": "Custom regex to hide messages that match it.",
+
+  "yacl3.config.streamermode:config.category.twitch": "Twitch",
+  "yacl3.config.streamermode:config.group.twitchRelay": "Twitch Relay",
+  "yacl3.config.streamermode:config.group.twitchRelay.desc": "Relay chat messages from Twitch to Minecraft.",
+
+  "yacl3.config.streamermode:config.twitchRelayEnabled": "Enable Twitch Relay",
+  "yacl3.config.streamermode:config.twitchRelayEnabled.desc": "Enable Twitch → Minecraft chat relay.",
+
+  "yacl3.config.streamermode:config.twitchRelayChannel": "Twitch Channel ID",
+  "yacl3.config.streamermode:config.twitchRelayChannel.desc": "Channel ID to receive Twitch chat messages from.",
+
+  "yacl3.config.streamermode:config.category.miscellaneous": "Miscellaneous",
+  "yacl3.config.streamermode:config.group.miscSettings": "Miscellaneous Settings",
+
+  "yacl3.config.streamermode:config.networkProtocolErrorSuppression": "Suppress Network Protocol Error Kicks",
+  "yacl3.config.streamermode:config.networkProtocolErrorSuppression.desc": "If enabled, Network Protocol Error kicks will be suppressed.",
+
+  "yacl3.config.streamermode:config.nonStreamerJoinNotice": "Non-streamer Join Notice",
+  "yacl3.config.streamermode:config.nonStreamerJoinNotice.desc": "If disabled, you will no longer see a notice when using the mod as a non-streamer.",
+
+  "yacl3.config.streamermode:config.debugging": "Debugging",
+  "yacl3.config.streamermode:config.debugging.desc": "If enabled, the mod will print debug messages to the console."
 }

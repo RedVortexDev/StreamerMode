@@ -20,9 +20,9 @@ public class CustomRegexCheck extends MessageCheck {
     @Override
     public boolean passesCheck(Message message) {
         try {
-            return message.getStripped().matches(Config.getInstance().getCustomRegex());
+            return message.getStripped().matches(Config.HANDLER.instance().customRegex);
         } catch (PatternSyntaxException e) {
-            StreamerMode.LOGGER.error("Invalid custom regex: {}", Config.getInstance().getCustomRegex(), e);
+            StreamerMode.LOGGER.error("Invalid custom regex: {}", Config.HANDLER.instance().customRegex, e);
             ChatSender.sendMessage("Invalid custom regex, check console for more info.", ChatType.FAIL);
         }
         return false;
@@ -30,7 +30,7 @@ public class CustomRegexCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return !Config.getInstance().getCustomRegex().isEmpty();
+        return !Config.HANDLER.instance().customRegex.isEmpty();
     }
 
 }

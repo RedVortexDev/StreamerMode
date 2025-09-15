@@ -23,7 +23,7 @@ public class PlotAdCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHidePlotAds();
+        return Config.HANDLER.instance().hidePlotAds;
     }
 
 }

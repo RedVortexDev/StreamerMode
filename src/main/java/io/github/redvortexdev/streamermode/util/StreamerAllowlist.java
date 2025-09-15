@@ -7,7 +7,7 @@ import java.util.UUID;
 
 /**
  * Do not modify the mod to enable Streamer Mode, it includes banned capabilities.
- * Only Jeremaster and developers should be able to use this mod.
+ * Only official streamers and developers should be able to use this mod.
  */
 public final class StreamerAllowlist {
 
@@ -27,7 +27,7 @@ public final class StreamerAllowlist {
         if (uuid == null) {
             return false;
         }
-        // Let contributors use the mod in development environment.
+        // Let contributors use the mod in a development environment.
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             return true;
         }

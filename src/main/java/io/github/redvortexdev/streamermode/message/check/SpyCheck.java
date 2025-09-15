@@ -20,7 +20,7 @@ public class SpyCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHideSpy();
+        return Config.HANDLER.instance().hideSpy;
     }
 
 }

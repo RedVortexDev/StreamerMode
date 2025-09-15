@@ -3,8 +3,6 @@ package io.github.redvortexdev.streamermode.message;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.processor.MessageProcessorRunner;
-import io.github.redvortexdev.streamermode.message.processor.impl.MessageHider;
-import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
 import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
@@ -42,16 +40,11 @@ public class Message {
     /**
      * Hides this message, following ones associated with it if there are any, and the associated sound if there is any.
      */
-    public void hide() {
+    public void cancel() {
         this.callback.cancel();
 
-        if (this.passedCheckType.getSoundCount() > 0) {
-            SoundCancelQueue.queueCancellation(this.passedCheckType.getSoundCount());
-        }
-        MessageHider.queueCancellation(this.passedCheckType.getMessageAmount() - 1);
-
-        if (Config.getInstance().isDebugging()) {
-            StreamerMode.LOGGER.info("[CANCELLED] [{}] {} | {}", this.passedCheckType.name(), this.text.getString(), this.text);
+        if (Config.HANDLER.instance().debugging) {
+            StreamerMode.LOGGER.info("[CANCELLED] [{}] {} | {}", this.passedCheckType.name(), this.getStripped(), this.text);
         }
     }
 

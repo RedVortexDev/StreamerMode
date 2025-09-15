@@ -11,7 +11,7 @@ public class MessageDebugLogger extends MessageProcessor {
 
     @Override
     protected void handle(Message message) {
-        if (Config.getInstance().isDebugging()) {
+        if (Config.HANDLER.instance().debugging) {
             if (StreamerMode.MC.world == null) {
                 return;
             }

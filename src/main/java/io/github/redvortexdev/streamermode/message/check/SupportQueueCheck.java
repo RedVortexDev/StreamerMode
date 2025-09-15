@@ -21,7 +21,7 @@ public class SupportQueueCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHideSupport();
+        return Config.HANDLER.instance().hideSupport;
     }
 
 }

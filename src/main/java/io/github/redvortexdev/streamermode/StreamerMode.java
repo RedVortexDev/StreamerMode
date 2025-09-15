@@ -1,15 +1,16 @@
 package io.github.redvortexdev.streamermode;
 
+import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.queue.QueueCommand;
 import io.github.redvortexdev.streamermode.twitch.TwitchChatRelay;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class StreamerMode implements ClientModInitializer {
 
     /**
      * Do not modify the mod to enable Streamer Mode, it includes banned capabilities.
-     * Only Jeremaster and developers should be able to use this mod.
+     * Only official streamers and developers should be able to use this mod.
      */
     public static void enableStreaming() {
         streamingAllowed = true;
@@ -54,12 +55,18 @@ public class StreamerMode implements ClientModInitializer {
         StreamerMode.onDiamondFire = onDiamondFire;
     }
 
-    public static Key identifier(@KeyPattern.Value String path) {
+    public static Key key(@KeyPattern.Value String path) {
         return Key.key(MOD_ID, path);
+    }
+
+    public static Identifier identifier(@KeyPattern.Value String path) {
+        return Identifier.of(MOD_ID, path);
     }
 
     @Override
     public void onInitializeClient() {
+        Config.HANDLER.load();
+
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
             if (queuedScreen != null) {
                 MC.setScreen(queuedScreen);

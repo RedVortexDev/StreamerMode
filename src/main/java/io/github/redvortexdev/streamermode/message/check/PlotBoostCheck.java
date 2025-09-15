@@ -23,7 +23,7 @@ public class PlotBoostCheck extends MessageCheck {
 
     @Override
     public boolean isCheckEnabled() {
-        return Config.getInstance().isHidePlotBoosts();
+        return Config.HANDLER.instance().hidePlotBoosts;
     }
 
 }
