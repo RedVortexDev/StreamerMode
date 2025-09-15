@@ -12,7 +12,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;

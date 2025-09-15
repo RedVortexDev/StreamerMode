@@ -2,8 +2,8 @@ package io.github.redvortexdev.streamermode.message.processor;
 
 import io.github.redvortexdev.streamermode.message.Message;
 import io.github.redvortexdev.streamermode.message.processor.impl.MessageDebugLogger;
-import io.github.redvortexdev.streamermode.message.processor.impl.MessageHidingQueuer;
 import io.github.redvortexdev.streamermode.message.processor.impl.MessageHider;
+import io.github.redvortexdev.streamermode.message.processor.impl.MessageHidingQueuer;
 
 public abstract class MessageProcessorRunner {
 

@@ -40,4 +40,5 @@ public class MessageHidingQueuer extends MessageProcessor {
             MessageCancelQueue.queueCancellation(amount);
         }
     }
+
 }
