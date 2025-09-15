@@ -2,6 +2,7 @@
   "yacl3.config.streamermode:config.title": "Streamer Mode Configuration",
 
   "yacl3.config.streamermode:config.category.hiding": "Hiding",
+  "yacl3.config.streamermode:config.hideDmsExceptions": "Hide Direct Messages Exceptions",
   "yacl3.config.streamermode:config.category.hiding.group.types": "Hide Message Types (Streamer Only)",
   "yacl3.config.streamermode:config.category.hiding.group.types.desc": "Control which types of messages to hide while streaming.",
 
@@ -44,6 +45,9 @@
 
   "yacl3.config.streamermode:config.category.miscellaneous": "Miscellaneous",
   "yacl3.config.streamermode:config.group.miscSettings": "Miscellaneous Settings",
+
+  "yacl3.config.streamermode:config.disableAdminVanishOnJoin": "Disable Admin Vanish on Join",
+  "yacl3.config.streamermode:config.disableAdminVanishOnJoin.desc": "If enabled, Admin Vanish is disabled when you join the server.",
 
   "yacl3.config.streamermode:config.networkProtocolErrorSuppression": "Suppress Network Protocol Error Kicks",
   "yacl3.config.streamermode:config.networkProtocolErrorSuppression.desc": "If enabled, Network Protocol Error kicks will be suppressed.",

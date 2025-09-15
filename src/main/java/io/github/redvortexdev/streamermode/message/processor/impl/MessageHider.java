@@ -4,32 +4,17 @@ import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.Message;
 import io.github.redvortexdev.streamermode.message.processor.MessageProcessor;
-import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
+import io.github.redvortexdev.streamermode.util.MessageCancelQueue;
 
 public class MessageHider extends MessageProcessor {
 
-    private static int pendingCancellations = 0;
-
     @Override
     protected void handle(Message message) {
-        int amount = message.getPassedCheckType().getMessageAmount();
-        if (Config.HANDLER.instance().debugging) {
-            StreamerMode.LOGGER.info("[CHECK] [{}] {} | Amount: {} | Pending: {}", message.getPassedCheckType().name(), message.getStripped(), amount, pendingCancellations);
-        }
-
-        if (amount > 0) {
-            if (message.getPassedCheckType().getSoundCount() > 0) {
-                SoundCancelQueue.queueCancellation(message.getPassedCheckType().getSoundCount());
-            }
-            pendingCancellations = Math.max(pendingCancellations, amount);
-        }
-
-        if (pendingCancellations > 0) {
+        if (MessageCancelQueue.shouldCancelMessage()) {
             if (Config.HANDLER.instance().debugging) {
-                StreamerMode.LOGGER.info("[CANCELLING] [{}] {} | Pending: {}", message.getPassedCheckType().name(), message.getStripped(), pendingCancellations);
+                StreamerMode.LOGGER.info("[CANCELLING] [{}] {} | Pending(after): {}", message.getPassedCheckType().name(), message.getStripped(), MessageCancelQueue.getPendingCancellations());
             }
             message.cancel();
-            pendingCancellations--;
         }
     }
 

@@ -3,6 +3,7 @@ package io.github.redvortexdev.streamermode.mixin;
 import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.Message;
+import io.github.redvortexdev.streamermode.util.MessageCancelQueue;
 import io.github.redvortexdev.streamermode.util.SoundCancelQueue;
 import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import io.github.redvortexdev.streamermode.util.chat.ChatType;
@@ -47,6 +48,9 @@ public class MixinClientPlayNetworkHandler {
             StreamerMode.setOnDiamondFire(true);
             if (!StreamerMode.isStreamingAllowed() && Config.HANDLER.instance().nonStreamerJoinNotice) {
                 ChatSender.sendMessage("Streamer-only features are disabled (suppress in config)", ChatType.INFO);
+            }
+            if (Config.HANDLER.instance().disableAdminVanishOnJoin && StreamerMode.MC.getNetworkHandler() != null) {
+                StreamerMode.MC.getNetworkHandler().sendCommand("adminv off");
             }
         }
 

@@ -10,7 +10,7 @@ import io.github.redvortexdev.streamermode.util.StreamerAllowlist;
 public class DirectMessageFilter extends MessageProcessor {
 
     private static boolean isUserAllowedDirectMessage(Message message) {
-        return StreamerAllowlist.isPlayerAllowed(DirectMessageCheck.getSendingPlayer(message));
+        return StreamerAllowlist.isDmAllowed(DirectMessageCheck.getSendingPlayer(message));
     }
 
     @Override
