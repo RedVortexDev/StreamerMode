@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientConnection.class)
 public class MixinClientConnection {
 
-    @Inject(method = "connect(Ljava/lang/String;ILnet/minecraft/network/NetworkState;Lnet/minecraft/network/NetworkState;Lnet/minecraft/network/listener/ClientPacketListener;Lnet/minecraft/network/packet/c2s/handshake/ConnectionIntent;)V", at = @At("TAIL"))
+    @Inject(method = "connect(Ljava/lang/String;ILnet/minecraft/network/state/NetworkState;Lnet/minecraft/network/state/NetworkState;Lnet/minecraft/network/listener/ClientPacketListener;Lnet/minecraft/network/packet/c2s/handshake/ConnectionIntent;)V", at = @At("TAIL"))
     public void connect(CallbackInfo ci) {
         if (StreamerAllowlist.isStreamer(StreamerMode.MC.getSession().getUuidOrNull())) {
             StreamerMode.enableStreaming();

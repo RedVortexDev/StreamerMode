@@ -6,6 +6,7 @@ import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.Palette;
 import io.github.redvortexdev.streamermode.util.WebUtility;
+import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.kyori.adventure.text.Component;
@@ -117,7 +118,7 @@ public final class QueueCommand {
                                             if (!QueueEntry.getHiddenEntries().contains(id)) {
                                                 QueueEntry.getHiddenEntries().add(id);
                                             }
-                                            StreamerMode.MC.player.networkHandler.sendCommand("join " + id);
+                                            StreamerMode.MC.player.networkHandler.sendChatCommand("join " + id);
                                             StreamerMode.MC.player.sendMessage(Component.text("⏩ ", Palette.MINT_DARK)
                                                     .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/queue show " + id))
                                                     .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("Click to unhide!", Palette.GRAY_LIGHT)))
@@ -148,7 +149,7 @@ public final class QueueCommand {
 
     private static @NotNull Component getQueueEntryComponent(QueueEntry entry, String plotId, Component description) {
         Component entryMessage = Component.text("#" + entry.getPosition(), Palette.SKY)
-                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/queue join " + entry.getPlotId()))
+                .clickEvent(ClickEvent.runCommand("/queue join " + entry.getPlotId()))
                 .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("Click to join!", Palette.GRAY_LIGHT)))
                 .append(Component.text(" - ", Palette.GRAY)
                         .append(Component.text(plotId, Palette.SKY)

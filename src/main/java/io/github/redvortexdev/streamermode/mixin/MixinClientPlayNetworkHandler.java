@@ -49,7 +49,7 @@ public class MixinClientPlayNetworkHandler {
                 ChatSender.sendMessage("Streamer-only features are disabled (suppress in config)", ChatType.INFO);
             }
             if (Config.HANDLER.instance().disableAdminVanishOnJoin && StreamerMode.MC.getNetworkHandler() != null) {
-                StreamerMode.MC.getNetworkHandler().sendCommand("adminv off");
+                StreamerMode.MC.getNetworkHandler().sendChatCommand("adminv off");
             }
         }
 
