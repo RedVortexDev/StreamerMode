@@ -6,13 +6,12 @@ import io.github.redvortexdev.streamermode.StreamerMode;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.Palette;
 import io.github.redvortexdev.streamermode.util.WebUtility;
-import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -118,7 +117,7 @@ public final class QueueCommand {
                                             if (!QueueEntry.getHiddenEntries().contains(id)) {
                                                 QueueEntry.getHiddenEntries().add(id);
                                             }
-                                            StreamerMode.MC.player.networkHandler.sendChatCommand("join " + id);
+                                            StreamerMode.MC.player.connection.sendCommand("join " + id);
                                             StreamerMode.MC.player.sendMessage(Component.text("⏩ ", Palette.MINT_DARK)
                                                     .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/queue show " + id))
                                                     .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text("Click to unhide!", Palette.GRAY_LIGHT)))

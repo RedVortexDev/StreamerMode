@@ -5,8 +5,7 @@ import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.message.processor.MessageProcessorRunner;
 import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.Component;
-import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
-import net.minecraft.text.Text;
+import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
@@ -14,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 public class Message {
 
-    private final Text text;
+    private final net.minecraft.network.chat.Component text;
     private final CallbackInfo callback;
     private final MessageCheckType passedCheckType;
 
-    public Message(GameMessageS2CPacket packet, CallbackInfo ci) {
+    public Message(ClientboundSystemChatPacket packet, CallbackInfo ci) {
         this.text = packet.content();
         this.callback = ci;
         this.passedCheckType = MessageChecker.getPassedMessageTypeCheck(this);

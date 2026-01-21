@@ -8,15 +8,15 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.key.KeyPattern;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class StreamerMode implements ClientModInitializer {
 
-    public static final MinecraftClient MC = MinecraftClient.getInstance();
+    public static final Minecraft MC = Minecraft.getInstance();
     public static final String MOD_ID = "streamermode";
     public static final String MOD_NAME = "Streamer Mode";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
@@ -60,7 +60,7 @@ public class StreamerMode implements ClientModInitializer {
     }
 
     public static Identifier identifier(@KeyPattern.Value String path) {
-        return Identifier.of(MOD_ID, path);
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 
     @Override

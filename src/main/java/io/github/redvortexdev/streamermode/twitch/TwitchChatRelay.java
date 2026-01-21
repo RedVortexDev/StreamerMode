@@ -175,7 +175,7 @@ public final class TwitchChatRelay {
                 .append(Component.text(" "))
                 .append(content);
 
-        StreamerMode.MC.inGameHud.getChatHud().addMessage(MinecraftClientAudiences.of().asNative(result));
+        StreamerMode.MC.gui.getChat().addMessage(MinecraftClientAudiences.of().asNative(result));
     }
 
 }
