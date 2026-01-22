@@ -29,16 +29,6 @@ public final class TwitchChatRelay {
     private TwitchChatRelay() {
         this.connected = false;
         this.currentChannel = "";
-
-        CompletableFuture.runAsync(() -> {
-            String channel = Config.HANDLER.instance().twitchRelayChannel.trim();
-
-            if (Config.HANDLER.instance().twitchRelayEnabled && !channel.isEmpty()) {
-                this.createClientIfNeeded();
-                this.connectToChannel(channel);
-                ChatSender.sendMessage("Twitch relay connecting to " + channel, ChatType.INFO);
-            }
-        });
     }
 
     public static TwitchChatRelay getInstance() {
@@ -175,10 +165,12 @@ public final class TwitchChatRelay {
                 .append(Component.text(" "))
                 .append(content);
 
-        LocalPlayer player = StreamerMode.MC.player;
-        if (player != null) {
-            player.sendMessage(result);
-        }
+        StreamerMode.MC.execute(() -> {
+            LocalPlayer player = StreamerMode.MC.player;
+            if (player != null) {
+                player.sendMessage(result);
+            }
+        });
     }
 
 }
