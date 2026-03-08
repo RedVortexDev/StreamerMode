@@ -40,6 +40,7 @@ public final class QueueCommand {
         dispatcher.register(ClientCommandManager.literal("queue")
                 .executes(ctx -> {
                     try {
+
                         if (StreamerMode.MC.player == null) {
                             return -1;
                         }
@@ -63,34 +64,36 @@ public final class QueueCommand {
                                     queue.add(queueEntry);
                                 }
                             }
+                            StreamerMode.MC.execute(() -> {
 
-                            StreamerMode.MC.player.playSound(SoundEvents.UI_TOAST_IN, 2F, 1F);
+                                StreamerMode.MC.player.playSound(SoundEvents.UI_TOAST_IN, 2F, 1F);
 
-                            StreamerMode.MC.player.sendMessage(Component.text("\n" + " ".repeat(StreamerMode.HEADER_PAD))
-                                    .append(Component.text("⏪  ", Palette.MINT_DARK)
-                                            .append(Component.text("Twitch Plot Queue", Palette.MINT))
-                                            .append(Component.text("  ⏩", Palette.MINT_DARK))
-                                    )
-                            );
+                                StreamerMode.MC.player.sendMessage(Component.text("\n" + " ".repeat(StreamerMode.HEADER_PAD))
+                                        .append(Component.text("⏪  ", Palette.MINT_DARK)
+                                                .append(Component.text("Twitch Plot Queue", Palette.MINT))
+                                                .append(Component.text("  ⏩", Palette.MINT_DARK))
+                                        )
+                                );
 
-                            for (QueueEntry entry : queue) {
-                                String plotId = "?";
-                                if (entry.getPlotId() != null) {
-                                    plotId = entry.getPlotId();
+                                for (QueueEntry entry : queue) {
+                                    String plotId = "?";
+                                    if (entry.getPlotId() != null) {
+                                        plotId = entry.getPlotId();
+                                    }
+
+                                    Component description = Component.text("N/A", Palette.GRAY_LIGHT);
+
+                                    if (!entry.getDescription().isEmpty()) {
+                                        description = Component.text(entry.getDescription(), Palette.SKY_LIGHT);
+                                    }
+
+                                    Component entryMessage = getQueueEntryComponent(entry, plotId, description);
+
+                                    StreamerMode.MC.player.sendMessage(entryMessage);
                                 }
 
-                                Component description = Component.text("N/A", Palette.GRAY_LIGHT);
-
-                                if (!entry.getDescription().isEmpty()) {
-                                    description = Component.text(entry.getDescription(), Palette.SKY_LIGHT);
-                                }
-
-                                Component entryMessage = getQueueEntryComponent(entry, plotId, description);
-
-                                StreamerMode.MC.player.sendMessage(entryMessage);
-                            }
-
-                            StreamerMode.MC.player.sendMessage(Component.empty());
+                                StreamerMode.MC.player.sendMessage(Component.empty());
+                            });
                         });
                     } catch (IOException e) {
                         StreamerMode.MC.player.sendMessage(Component.text("Error while requesting", Palette.RED));

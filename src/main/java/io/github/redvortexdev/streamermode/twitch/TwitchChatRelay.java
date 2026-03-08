@@ -48,21 +48,29 @@ public final class TwitchChatRelay {
         boolean enabled = Config.HANDLER.instance().twitchRelayEnabled;
         String channel = Config.HANDLER.instance().twitchRelayChannel.trim();
 
-        if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
-            if (!this.connected) {
-                this.createClientIfNeeded();
-                this.connectToChannel(channel);
-                ChatSender.sendMessage("Twitch relay connected to " + channel, ChatType.INFO);
-            } else if (!channel.equals(this.currentChannel)) {
-                this.switchChannel(channel);
-                ChatSender.sendMessage("Twitch relay channel changed to " + channel, ChatType.INFO);
+        CompletableFuture.runAsync(() -> {
+            if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
+                if (!this.connected) {
+                    this.createClientIfNeeded();
+                    this.connectToChannel(channel);
+
+                    StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay connected to " + channel, ChatType.INFO));
+                } else if (!channel.equals(this.currentChannel)) {
+                    this.switchChannel(channel);
+
+                    StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay channel changed to " + channel, ChatType.INFO));
+                }
+            } else {
+                if (this.connected) {
+                    this.disconnect();
+
+                    StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay disconnected", ChatType.INFO));
+                }
             }
-        } else {
-            if (this.connected) {
-                this.disconnect();
-                ChatSender.sendMessage("Twitch relay disconnected", ChatType.INFO);
-            }
-        }
+        }).exceptionally(ex -> {
+            StreamerMode.LOGGER.error("Error while updating Twitch relay connection", ex);
+            return null;
+        });
     }
 
     private void createClientIfNeeded() {
