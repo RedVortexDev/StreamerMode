@@ -9,6 +9,7 @@ import dev.isxander.yacl3.config.v2.api.ConfigField;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.AutoGen;
 import dev.isxander.yacl3.config.v2.api.autogen.Boolean;
+import dev.isxander.yacl3.config.v2.api.autogen.IntSlider;
 import dev.isxander.yacl3.config.v2.api.autogen.ListGroup;
 import dev.isxander.yacl3.config.v2.api.autogen.OptionAccess;
 import dev.isxander.yacl3.config.v2.api.autogen.StringField;
@@ -21,14 +22,14 @@ import java.util.List;
 
 public final class Config {
 
-    public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
-            .id(StreamerMode.identifier("config"))
-            .serializer(config -> GsonConfigSerializerBuilder.create(config)
-                    .setPath(FabricLoader.getInstance().getConfigDir().resolve(StreamerMode.MOD_ID + ".json5"))
-                    .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
-                    .setJson5(true)
-                    .build())
-            .build();
+    public static final ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
+        .id(StreamerMode.identifier("config"))
+        .serializer(config -> GsonConfigSerializerBuilder.create(config)
+            .setPath(FabricLoader.getInstance().getConfigDir().resolve(StreamerMode.MOD_ID + ".json5"))
+            .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
+            .setJson5(true)
+            .build())
+        .build();
 
     // Hiding.
 
@@ -41,6 +42,11 @@ public final class Config {
     @AutoGen(category = "hiding", group = "types")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
     public boolean hideModeration = true;
+
+    @SerialEntry
+    @AutoGen(category = "hiding", group = "types")
+    @Boolean(formatter = Boolean.Formatter.ON_OFF)
+    public boolean hidePublicPunishments = true;
 
     @SerialEntry
     @AutoGen(category = "hiding", group = "types")
@@ -88,6 +94,21 @@ public final class Config {
     @AutoGen(category = "twitch")
     @Boolean(formatter = Boolean.Formatter.ON_OFF)
     public boolean twitchRelayEnabled = true;
+
+    @SerialEntry
+    @AutoGen(category = "twitch")
+    @Boolean(formatter = Boolean.Formatter.ON_OFF)
+    public boolean twitchSideChat = false;
+
+    @SerialEntry
+    @AutoGen(category = "twitch")
+    @IntSlider(min = 40, max = 320, step = 10)
+    public int twitchSideChatWidth = 320;
+
+    @SerialEntry
+    @AutoGen(category = "twitch")
+    @IntSlider(min = 20, max = 180, step = 10)
+    public int twitchSideChatHeight = 180;
 
     @SerialEntry
     @AutoGen(category = "twitch")

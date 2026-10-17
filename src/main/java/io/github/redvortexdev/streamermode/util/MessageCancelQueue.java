@@ -8,7 +8,9 @@ public final class MessageCancelQueue {
     }
 
     public static void queueCancellation(int amount) {
-        if (amount <= 0) return;
+        if (amount <= 0) {
+            return;
+        }
         pendingCancellations = Math.max(pendingCancellations, amount);
     }
 

@@ -19,8 +19,8 @@ public class SimplePrefixHandler implements PrefixHandler {
     @Override
     public Component getText(TwitchChatMessage message) {
         return Component.text(this.prefix)
-                .font(StreamerMode.key("twitch_relay"))
-                .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(this.description, Palette.PURPLE)));
+            .font(StreamerMode.key("twitch_relay"))
+            .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(this.description, Palette.PURPLE)));
     }
 
 }

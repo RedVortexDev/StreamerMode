@@ -15,8 +15,8 @@ public class SupportQueueCheck extends MessageCheck {
     @Override
     public boolean passesCheck(Message message) {
         return message.getStripped().startsWith("[SUPPORT] ") &&
-                (message.getStripped().contains("joined the support queue") ||
-                        message.getStripped().contains("left the support queue"));
+            (message.getStripped().contains("joined the support queue") ||
+                message.getStripped().contains("left the support queue"));
     }
 
     @Override

@@ -18,9 +18,9 @@ public class BitsPrefixHandler implements PrefixHandler {
         }
 
         return Component.empty().hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(message.bitCount() + " Bits", bitColor.getColor())))
-                .append(Component.text(bitColor.getFontLetter())
-                        .font(StreamerMode.key("twitch_relay")))
-                .append(Component.text(message.bitCount(), bitColor.getColor(), TextDecoration.BOLD));
+            .append(Component.text(bitColor.getFontLetter())
+                .font(StreamerMode.key("twitch_relay")))
+            .append(Component.text(message.bitCount(), bitColor.getColor(), TextDecoration.BOLD));
     }
 
     public enum BitColor {

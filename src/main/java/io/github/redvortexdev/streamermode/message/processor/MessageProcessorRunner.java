@@ -8,9 +8,9 @@ import io.github.redvortexdev.streamermode.message.processor.impl.MessageHidingQ
 public abstract class MessageProcessorRunner {
 
     private static final MessageProcessor[] MESSAGE_PROCESSORS = new MessageProcessor[]{
-            new MessageDebugLogger(),
-            new MessageHidingQueuer(),
-            new MessageHider()
+        new MessageDebugLogger(),
+        new MessageHidingQueuer(),
+        new MessageHider()
     };
 
     public static void process(Message message) {

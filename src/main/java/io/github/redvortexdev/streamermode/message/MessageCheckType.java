@@ -19,6 +19,7 @@ public enum MessageCheckType {
     MODERATION,
     INCOMING_REPORT(1, 1),
     SILENT_PUNISHMENT,
+    PUBLIC_PUNISHMENT,
     SCANNING(2),
     TELEPORTING,
     JOIN_FAIL,

@@ -37,8 +37,8 @@ public class MixinClientPlayNetworkHandler {
     }
 
     @Inject(method = "handleSystemChat", cancellable = true, at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/network/protocol/PacketUtils;ensureRunningOnSameThread(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketListener;Lnet/minecraft/network/PacketProcessor;)V",
-            shift = At.Shift.AFTER
+        target = "Lnet/minecraft/network/protocol/PacketUtils;ensureRunningOnSameThread(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketListener;Lnet/minecraft/network/PacketProcessor;)V",
+        shift = At.Shift.AFTER
     ))
     public void onGameMessage(ClientboundSystemChatPacket packet, CallbackInfo ci) {
         // It is likely no other servers will send this.

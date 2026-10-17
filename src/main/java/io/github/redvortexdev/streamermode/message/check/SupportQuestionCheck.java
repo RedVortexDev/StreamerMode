@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class SupportQuestionCheck extends MessageCheck {
 
-    private static final Pattern SUPPORT_QUESTION_REGEX = Pattern.compile("^.*?» Support Question: \\(Click to answer\\)\\nAsked by \\w+ \\[[a-zA-Z]+]\\n.+$");
+    private static final Pattern SUPPORT_QUESTION_REGEX = Pattern.compile("^.*?» Support Question: \\(Click to answer\\)\\nAsked by \\w+ \\[[^]\\n]+]\\n.+$");
 
     @Override
     public MessageCheckType getMessageType() {

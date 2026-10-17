@@ -13,9 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinNetwork {
 
     @Inject(method = {"onPacketError"}, at = {@At("HEAD")}, cancellable = true)
-    private void onPacketException(Packet<?> packet, Exception exception, CallbackInfo ci) {
+    private void onPacketException(Packet<?> packet, Exception cause, CallbackInfo ci) {
         if (Config.HANDLER.instance().networkProtocolErrorSuppression) {
-            StreamerMode.LOGGER.error("Network Protocol Error suppressed for {}", packet, exception);
+            StreamerMode.LOGGER.error("Network Protocol Error suppressed for {}", packet, cause);
             ci.cancel();
         }
     }

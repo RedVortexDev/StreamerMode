@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 
 public class PluginUpdateCheck extends MessageCheck {
 
-    private static final Pattern BUYCRAFT_UPDATE_REGEX = Pattern.compile("^A new version of BuycraftX \\([0-9.]+\\) is available\\. Go to your server panel at https://server.tebex.io/plugins to download the update\\.$");
-    private static final Pattern WORLD_EDIT_UPDATE_REGEX = Pattern.compile("^\\(FAWE\\) An update for FastAsyncWorldEdit is available\\. You are \\d+ build\\(s\\) behind.\\nYou are running build \\d+, the latest build is \\d+\\.\\nUpdate at https://ci.athion.net/job/FastAsyncWorldEdit$");
-    private static final Pattern VIA_VERSION_UPDATE_REGEX = Pattern.compile("^\\[ViaVersion] There is a newer plugin version available: [0-9.]+(-SNAPSHOT)?, you're on: [0-9.]+(-SNAPSHOT)?");
+    private static final Pattern FAWE_BUILD_UPDATE_REGEX = Pattern.compile("^\\(FAWE\\) An update for FastAsyncWorldEdit is available\\. You are \\d+ build\\(s\\) behind\\.\nYou are running build \\d+, the latest build is \\d+\\.\nUpdate at .+$");
+    private static final Pattern FAWE_RELEASE_UPDATE_REGEX = Pattern.compile("^\\(FAWE\\) A new release for FastAsyncWorldEdit is available: \\S+\\. You are currently on \\S+\\. Download from .+ or .+\\.$");
+    private static final Pattern VIA_VERSION_UPDATE_REGEX = Pattern.compile("^\\[ViaVersion] (?:There is a newer plugin version available: [^ ,]+, you're on: [^ ,]+|You are using a (?:debug/)?custom version, consider updating\\.)$");
 
     @Override
     public MessageCheckType getMessageType() {
@@ -20,9 +20,10 @@ public class PluginUpdateCheck extends MessageCheck {
 
     @Override
     public boolean passesCheck(Message message) {
-        return VIA_VERSION_UPDATE_REGEX.matcher(message.getStripped()).matches()
-                || BUYCRAFT_UPDATE_REGEX.matcher(message.getStripped()).matches()
-                || WORLD_EDIT_UPDATE_REGEX.matcher(message.getStripped()).matches();
+        String text = message.getStripped();
+        return FAWE_BUILD_UPDATE_REGEX.matcher(text).matches()
+            || FAWE_RELEASE_UPDATE_REGEX.matcher(text).matches()
+            || VIA_VERSION_UPDATE_REGEX.matcher(text).matches();
     }
 
     @Override

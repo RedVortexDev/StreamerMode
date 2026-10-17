@@ -7,7 +7,7 @@ import io.github.redvortexdev.streamermode.message.MessageCheckType;
 
 public class BannedJoinCheck extends MessageCheck {
 
-    private static final String BANNED_JOIN_REGEX = "^([^ ]{3,}) tried to join, but is banned \\(.*\\)!$";
+    private static final String BANNED_JOIN_REGEX = "^› ([^ ]{3,}) tried to join, but is banned \\(.*\\)!$";
 
     @Override
     public MessageCheckType getMessageType() {

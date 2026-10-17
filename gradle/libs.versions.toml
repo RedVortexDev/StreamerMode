@@ -1,0 +1,112 @@
+[versions]
+minecraft = "26.2"
+fabric-loader = "0.19.5"
+loom = "1.19.1"
+fabric-api = "0.160.0+26.2"
+fabric-language-kotlin = "1.14.2+kotlin.2.4.21"
+adventure-platform = "7.1.1"
+yacl = "3.9.7+26.2-fabric"
+modmenu = "20.0.3"
+twitch4j = "1.27.0"
+apollo = "2.5.14"
+events4j = "0.12.3"
+jackson = "2.22.2"
+jackson-annotations = "2.22"
+openfeign = "13.9.3"
+xanthic = "0.7.1"
+okhttp = "5.5.0"
+okio = "3.18.1"
+credentialmanager = "0.5.0"
+error-prone = "2.48.0"
+bucket4j = "8.10.1"
+caffeine = "2.9.3"
+hdrhistogram = "2.1.9"
+rxjava = "1.2.0"
+hystrix = "1.5.18"
+archaius = "0.4.1"
+nytimes-cache = "2.0.2"
+nv-websocket-client = "2.14"
+named-regexp = "1.0.0"
+commons-configuration = "1.10"
+commons-lang = "2.6"
+benasher44-uuid = "0.2.0"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+fabric-language-kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-language-kotlin" }
+adventure-platform-fabric = { module = "net.kyori:adventure-platform-fabric", version.ref = "adventure-platform" }
+yacl = { module = "dev.isxander:yet-another-config-lib", version.ref = "yacl" }
+modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+
+twitch4j = { module = "com.github.twitch4j:twitch4j", version.ref = "twitch4j" }
+twitch4j-auth = { module = "com.github.twitch4j:twitch4j-auth", version.ref = "twitch4j" }
+twitch4j-chat = { module = "com.github.twitch4j:twitch4j-chat", version.ref = "twitch4j" }
+twitch4j-client-websocket = { module = "com.github.twitch4j:twitch4j-client-websocket", version.ref = "twitch4j" }
+twitch4j-common = { module = "com.github.twitch4j:twitch4j-common", version.ref = "twitch4j" }
+twitch4j-eventsub-common = { module = "com.github.twitch4j:twitch4j-eventsub-common", version.ref = "twitch4j" }
+twitch4j-eventsub-websocket = { module = "com.github.twitch4j:twitch4j-eventsub-websocket", version.ref = "twitch4j" }
+twitch4j-extensions = { module = "com.github.twitch4j:twitch4j-extensions", version.ref = "twitch4j" }
+twitch4j-graphql = { module = "com.github.twitch4j:twitch4j-graphql", version.ref = "twitch4j" }
+twitch4j-helix = { module = "com.github.twitch4j:twitch4j-helix", version.ref = "twitch4j" }
+twitch4j-kraken = { module = "com.github.twitch4j:twitch4j-kraken", version.ref = "twitch4j" }
+twitch4j-messaginginterface = { module = "com.github.twitch4j:twitch4j-messaginginterface", version.ref = "twitch4j" }
+twitch4j-pubsub = { module = "com.github.twitch4j:twitch4j-pubsub", version.ref = "twitch4j" }
+twitch4j-util = { module = "com.github.twitch4j:twitch4j-util", version.ref = "twitch4j" }
+
+apollo-api = { module = "com.apollographql.apollo:apollo-api-jvm", version.ref = "apollo" }
+apollo-http-cache-api = { module = "com.apollographql.apollo:apollo-http-cache-api", version.ref = "apollo" }
+apollo-normalized-cache-api = { module = "com.apollographql.apollo:apollo-normalized-cache-api-jvm", version.ref = "apollo" }
+apollo-normalized-cache = { module = "com.apollographql.apollo:apollo-normalized-cache-jvm", version.ref = "apollo" }
+apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo" }
+archaius-core = { module = "com.netflix.archaius:archaius-core", version.ref = "archaius" }
+benasher44-uuid = { module = "com.benasher44:uuid-jvm", version.ref = "benasher44-uuid" }
+bucket4j = { module = "com.bucket4j:bucket4j_jdk8-core", version.ref = "bucket4j" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
+commons-configuration = { module = "commons-configuration:commons-configuration", version.ref = "commons-configuration" }
+commons-lang = { module = "commons-lang:commons-lang", version.ref = "commons-lang" }
+credentialmanager = { module = "com.github.philippheuer.credentialmanager:credentialmanager", version.ref = "credentialmanager" }
+error-prone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error-prone" }
+events4j-api = { module = "com.github.philippheuer.events4j:events4j-api", version.ref = "events4j" }
+events4j-core = { module = "com.github.philippheuer.events4j:events4j-core", version.ref = "events4j" }
+events4j-handler-simple = { module = "com.github.philippheuer.events4j:events4j-handler-simple", version.ref = "events4j" }
+feign-core = { module = "io.github.openfeign:feign-core", version.ref = "openfeign" }
+feign-hystrix = { module = "io.github.openfeign:feign-hystrix", version.ref = "openfeign" }
+feign-jackson = { module = "io.github.openfeign:feign-jackson", version.ref = "openfeign" }
+feign-okhttp = { module = "io.github.openfeign:feign-okhttp", version.ref = "openfeign" }
+feign-slf4j = { module = "io.github.openfeign:feign-slf4j", version.ref = "openfeign" }
+hdrhistogram = { module = "org.hdrhistogram:HdrHistogram", version.ref = "hdrhistogram" }
+hystrix-core = { module = "com.netflix.hystrix:hystrix-core", version.ref = "hystrix" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson-annotations" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+named-regexp = { module = "com.github.tony19:named-regexp", version.ref = "named-regexp" }
+nytimes-cache = { module = "com.nytimes.android:cache", version.ref = "nytimes-cache" }
+nv-websocket-client = { module = "com.neovisionaries:nv-websocket-client", version.ref = "nv-websocket-client" }
+okhttp-jvm = { module = "com.squareup.okhttp3:okhttp-jvm", version.ref = "okhttp" }
+okio-jvm = { module = "com.squareup.okio:okio-jvm", version.ref = "okio" }
+rxjava = { module = "io.reactivex:rxjava", version.ref = "rxjava" }
+xanthic-cache-api = { module = "io.github.xanthic.cache:cache-api", version.ref = "xanthic" }
+xanthic-cache-core = { module = "io.github.xanthic.cache:cache-core", version.ref = "xanthic" }
+xanthic-cache-provider-caffeine = { module = "io.github.xanthic.cache:cache-provider-caffeine", version.ref = "xanthic" }
+
+[bundles]
+twitch4j = [
+    "twitch4j-auth", "twitch4j-chat", "twitch4j-client-websocket", "twitch4j-common", "twitch4j-eventsub-common",
+    "twitch4j-eventsub-websocket", "twitch4j-extensions", "twitch4j-graphql", "twitch4j-helix", "twitch4j-kraken",
+    "twitch4j-messaginginterface", "twitch4j-pubsub", "twitch4j-util",
+]
+twitch4j-libraries = [
+    "apollo-api", "apollo-http-cache-api", "apollo-normalized-cache-api", "apollo-normalized-cache", "apollo-runtime",
+    "archaius-core", "benasher44-uuid", "bucket4j", "caffeine", "commons-configuration", "commons-lang",
+    "credentialmanager", "error-prone-annotations", "events4j-api", "events4j-core", "events4j-handler-simple",
+    "feign-core", "feign-hystrix", "feign-jackson", "feign-okhttp", "feign-slf4j", "hdrhistogram", "hystrix-core",
+    "jackson-annotations", "jackson-core", "jackson-databind", "jackson-datatype-jsr310", "named-regexp",
+    "nytimes-cache", "nv-websocket-client", "okhttp-jvm", "okio-jvm", "rxjava", "xanthic-cache-api",
+    "xanthic-cache-core", "xanthic-cache-provider-caffeine",
+]
+
+[plugins]
+loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }

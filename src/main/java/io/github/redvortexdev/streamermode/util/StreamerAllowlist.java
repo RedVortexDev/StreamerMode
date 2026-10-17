@@ -14,12 +14,13 @@ import java.util.UUID;
 public final class StreamerAllowlist {
 
     private static final Set<Streamer> STREAMERS = Set.of(
-            new Streamer("Jeremaster", "6c669475-3026-4603-b3e7-52c97681ad3a"),
-            new Streamer("Maximization", "4a605151-5260-4ea9-9224-4be2d600dddf"),
-            new Streamer("Electrosolt", "cadf53b3-2a42-4119-9ebd-cec6fada6305"),
-            new Streamer("RedVortx", "fc513f92-b662-46e2-ada3-0a3eb73808a3"),
-            new Streamer("GeorgeRNG", "901c4cd0-98b9-4d3d-a8e9-08d15c6a4472"),
-            new Streamer("TheFoxPlush", "a3875f0b-db89-4d17-bc33-b51c3b84400d")
+        new Streamer("Jeremaster", "6c669475-3026-4603-b3e7-52c97681ad3a"),
+        new Streamer("Maximization", "4a605151-5260-4ea9-9224-4be2d600dddf"),
+        new Streamer("Electrosolt", "cadf53b3-2a42-4119-9ebd-cec6fada6305"),
+        new Streamer("RedVortx", "fc513f92-b662-46e2-ada3-0a3eb73808a3"),
+        new Streamer("GeorgeRNG", "901c4cd0-98b9-4d3d-a8e9-08d15c6a4472"),
+        new Streamer("TheFoxPlush", "a3875f0b-db89-4d17-bc33-b51c3b84400d"),
+        new Streamer("flopsuh", "d862023e-ceef-4ac4-b12e-c5da09ec2cf3")
     );
 
     private StreamerAllowlist() {

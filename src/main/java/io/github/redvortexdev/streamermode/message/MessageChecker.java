@@ -1,36 +1,54 @@
 package io.github.redvortexdev.streamermode.message;
 
-import io.github.redvortexdev.streamermode.message.check.*;
+import io.github.redvortexdev.streamermode.message.check.AdminCheck;
+import io.github.redvortexdev.streamermode.message.check.AltCheck;
+import io.github.redvortexdev.streamermode.message.check.BannedJoinCheck;
+import io.github.redvortexdev.streamermode.message.check.CustomRegexCheck;
+import io.github.redvortexdev.streamermode.message.check.DirectMessageCheck;
+import io.github.redvortexdev.streamermode.message.check.ModerationCheck;
+import io.github.redvortexdev.streamermode.message.check.PlotAdCheck;
+import io.github.redvortexdev.streamermode.message.check.PlotBoostCheck;
+import io.github.redvortexdev.streamermode.message.check.PluginUpdateCheck;
+import io.github.redvortexdev.streamermode.message.check.PublicPunishmentCheck;
+import io.github.redvortexdev.streamermode.message.check.ReportCheck;
+import io.github.redvortexdev.streamermode.message.check.SilentPunishmentCheck;
+import io.github.redvortexdev.streamermode.message.check.SpyCheck;
+import io.github.redvortexdev.streamermode.message.check.SupportAnswerCheck;
+import io.github.redvortexdev.streamermode.message.check.SupportCheck;
+import io.github.redvortexdev.streamermode.message.check.SupportQuestionCheck;
+import io.github.redvortexdev.streamermode.message.check.SupportQueueCheck;
+import io.github.redvortexdev.streamermode.message.check.TeleportCheck;
 
 public final class MessageChecker {
 
     private static final MessageCheck[] MESSAGE_CHECKS = new MessageCheck[]{
-            // General
-            new DirectMessageCheck(),
-            new PlotAdCheck(),
-            new PlotBoostCheck(),
+        // General
+        new DirectMessageCheck(),
+        new PlotAdCheck(),
+        new PlotBoostCheck(),
 
-            // Support
-            new SupportQueueCheck(),
-            new SupportCheck(),
-            new SupportQuestionCheck(),
-            new SupportAnswerCheck(),
+        // Support
+        new SupportQueueCheck(),
+        new SupportCheck(),
+        new SupportQuestionCheck(),
+        new SupportAnswerCheck(),
 
-            // Moderation
-            new ModerationCheck(),
-            new ReportCheck(),
-            new SilentPunishmentCheck(),
-            new AltCheck(),
-            new TeleportCheck(),
-            new BannedJoinCheck(),
+        // Moderation
+        new ModerationCheck(),
+        new ReportCheck(),
+        new SilentPunishmentCheck(),
+        new PublicPunishmentCheck(),
+        new AltCheck(),
+        new TeleportCheck(),
+        new BannedJoinCheck(),
 
-            // Admin
-            new SpyCheck(),
-            new PluginUpdateCheck(),
-            new AdminCheck(),
+        // Admin
+        new SpyCheck(),
+        new PluginUpdateCheck(),
+        new AdminCheck(),
 
-            // Custom regex
-            new CustomRegexCheck()
+        // Custom regex
+        new CustomRegexCheck()
     };
 
     private MessageChecker() {

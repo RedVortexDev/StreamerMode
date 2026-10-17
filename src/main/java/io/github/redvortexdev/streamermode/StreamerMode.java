@@ -1,5 +1,6 @@
 package io.github.redvortexdev.streamermode;
 
+import io.github.redvortexdev.streamermode.chat.SideChatHooks;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.queue.QueueCommand;
 import io.github.redvortexdev.streamermode.twitch.TwitchChatRelay;
@@ -66,10 +67,11 @@ public class StreamerMode implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         Config.HANDLER.load();
+        SideChatHooks.register();
 
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
             if (queuedScreen != null) {
-                MC.setScreen(queuedScreen);
+                MC.gui.setScreen(queuedScreen);
                 queuedScreen = null;
             }
             if (MC.player != null) {
@@ -77,9 +79,9 @@ public class StreamerMode implements ClientModInitializer {
             }
         });
 
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            QueueCommand.registerQueueCommand(dispatcher);
-        });
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, _) ->
+            QueueCommand.registerQueueCommand(dispatcher)
+        );
     }
 
 }

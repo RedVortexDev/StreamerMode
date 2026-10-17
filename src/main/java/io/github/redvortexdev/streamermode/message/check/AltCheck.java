@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 
 public class AltCheck extends MessageCheck {
 
-    private static final Pattern ALT_SCAN_REGEX = Pattern.compile("^Scanning \\w+(.|\n)*\\[Online] \\[Offline] \\[(IP|)Banned]\1*$");
+    private static final Pattern ALT_SCAN_REGEX = Pattern.compile("^Scanning \\S+( on .+)?\\.\n\\[Online] \\[Offline] \\[Banned] \\[IPBanned]$"
+        + "|^Scanning \\d+ online players\\.\\. \\[Online] \\[Offline] \\[Banned]$");
 
     @Override
     public MessageCheckType getMessageType() {

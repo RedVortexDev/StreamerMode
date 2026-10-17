@@ -4,16 +4,21 @@ import com.github.twitch4j.chat.TwitchChat;
 import com.github.twitch4j.chat.TwitchChatBuilder;
 import com.github.twitch4j.chat.events.channel.IRCMessageEvent;
 import io.github.redvortexdev.streamermode.StreamerMode;
+import io.github.redvortexdev.streamermode.chat.SideChat;
 import io.github.redvortexdev.streamermode.config.Config;
 import io.github.redvortexdev.streamermode.util.chat.ChatSender;
 import io.github.redvortexdev.streamermode.util.chat.ChatType;
 import io.github.redvortexdev.streamermode.util.chat.SectionSanitizer;
+import net.kyori.adventure.platform.modcommon.MinecraftClientAudiences;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.minecraft.client.player.LocalPlayer;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class TwitchChatRelay {
 
@@ -21,10 +26,18 @@ public final class TwitchChatRelay {
     private static final TwitchChatRelay INSTANCE = new TwitchChatRelay();
     private static final TwitchMessageFormatter FORMATTER = new TwitchMessageFormatter();
 
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor(runnable -> {
+        Thread thread = new Thread(runnable, "StreamerMode-Twitch");
+        thread.setDaemon(true);
+        return thread;
+    });
+
+    private final AtomicBoolean updateQueued = new AtomicBoolean();
+    private int tickCounter = 0;
+
     private TwitchChat chatClient;
     private boolean connected;
     private String currentChannel;
-    private int tickCounter = 0;
 
     private TwitchChatRelay() {
         this.connected = false;
@@ -45,32 +58,40 @@ public final class TwitchChatRelay {
     }
 
     public void updateConnection() {
+        if (!this.updateQueued.compareAndSet(false, true)) {
+            return;
+        }
+
+        EXECUTOR.execute(() -> {
+            this.updateQueued.set(false);
+            try {
+                this.applyConnectionState();
+            } catch (Throwable ex) {
+                StreamerMode.LOGGER.error("Error while updating Twitch relay connection", ex);
+            }
+        });
+    }
+
+    private void applyConnectionState() {
         boolean enabled = Config.HANDLER.instance().twitchRelayEnabled;
         String channel = Config.HANDLER.instance().twitchRelayChannel.trim();
 
-        CompletableFuture.runAsync(() -> {
-            if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
-                if (!this.connected) {
-                    this.createClientIfNeeded();
-                    this.connectToChannel(channel);
+        if (enabled && !channel.isEmpty() && StreamerMode.isOnDiamondFire()) {
+            if (!this.connected) {
+                this.createClientIfNeeded();
+                this.connectToChannel(channel);
 
-                    StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay connected to " + channel, ChatType.INFO));
-                } else if (!channel.equals(this.currentChannel)) {
-                    this.switchChannel(channel);
+                StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay connected to " + channel, ChatType.INFO));
+            } else if (!channel.equals(this.currentChannel)) {
+                this.switchChannel(channel);
 
-                    StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay channel changed to " + channel, ChatType.INFO));
-                }
-            } else {
-                if (this.connected) {
-                    this.disconnect();
-
-                    StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay disconnected", ChatType.INFO));
-                }
+                StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay channel changed to " + channel, ChatType.INFO));
             }
-        }).exceptionally(ex -> {
-            StreamerMode.LOGGER.error("Error while updating Twitch relay connection", ex);
-            return null;
-        });
+        } else if (this.connected) {
+            this.disconnect();
+
+            StreamerMode.MC.execute(() -> ChatSender.sendMessage("Twitch relay disconnected", ChatType.INFO));
+        }
     }
 
     private void createClientIfNeeded() {
@@ -84,13 +105,11 @@ public final class TwitchChatRelay {
     }
 
     private void connectToChannel(String channel) {
+        this.chatClient.connect();
+        this.chatClient.joinChannel(channel);
+
         this.connected = true;
         this.currentChannel = channel;
-
-        CompletableFuture.runAsync(() -> {
-            this.chatClient.connect();
-            this.chatClient.joinChannel(channel);
-        });
     }
 
     private void switchChannel(String newChannel) {
@@ -101,10 +120,6 @@ public final class TwitchChatRelay {
     }
 
     private void disconnect() {
-        if (!this.connected) {
-            return;
-        }
-
         this.chatClient.disconnect();
         this.connected = false;
         this.currentChannel = "";
@@ -125,11 +140,9 @@ public final class TwitchChatRelay {
         String user = nameOptional.get();
         String message = SectionSanitizer.sanitize(messageOptional.get());
 
-        // ignore nightbot
         if (event.getUser() != null && event.getUser().getName().equals("nightbot")) {
             return;
         }
-        // ignore commands
         if (message.startsWith("!")) {
             return;
         }
@@ -153,8 +166,24 @@ public final class TwitchChatRelay {
     }
 
     private void sendTwitchMessage(TwitchChatMessage message) {
-        Component prefix = FORMATTER.formatPrefix(message);
+        Component result = createTwitchMessage(message);
 
+        StreamerMode.MC.execute(() -> {
+            LocalPlayer player = StreamerMode.MC.player;
+            if (player == null) {
+                return;
+            }
+
+            if (SideChat.isEnabled()) {
+                SideChat.addMessage(MinecraftClientAudiences.of().asNative(result));
+            } else {
+                player.sendMessage(result);
+            }
+        });
+    }
+
+    private static @NonNull Component createTwitchMessage(TwitchChatMessage message) {
+        Component prefix = FORMATTER.formatPrefix(message);
         Component highlightMarker = Component.empty();
 
         if (message.isHighlighted()) {
@@ -162,23 +191,16 @@ public final class TwitchChatRelay {
         }
 
         Component content = Component.empty()
-                .append(highlightMarker
-                        .append(Component.text(message.user(), message.userColor()))
-                        .append(Component.text(": "))
-                        .append(Component.text(message.message()))
-                );
+            .append(highlightMarker
+                .append(Component.text(message.user(), message.userColor()))
+                .append(Component.text(": "))
+                .append(Component.text(message.message()))
+            );
 
-        Component result = Component.empty()
-                .append(prefix)
-                .append(Component.text(" "))
-                .append(content);
-
-        StreamerMode.MC.execute(() -> {
-            LocalPlayer player = StreamerMode.MC.player;
-            if (player != null) {
-                player.sendMessage(result);
-            }
-        });
+        return Component.empty()
+            .append(prefix)
+            .append(Component.text(" "))
+            .append(content);
     }
 
 }

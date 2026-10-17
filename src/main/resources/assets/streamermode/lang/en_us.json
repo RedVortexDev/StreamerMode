@@ -11,7 +11,8 @@
 
   "yacl3.config.streamermode:config.hideModeration": "Hide Moderation Messages",
   "yacl3.config.streamermode:config.hideModeration.desc": "If enabled, moderation-related messages will be hidden.",
-
+  "yacl3.config.streamermode:config.hidePublicPunishments": "Hide Public Punishments",
+  "yacl3.config.streamermode:config.hidePublicPunishments.desc": "If enabled, public ban, mute, warn and kick announcements will be hidden.",
   "yacl3.config.streamermode:config.hideSupport": "Hide Support Messages",
   "yacl3.config.streamermode:config.hideSupport.desc": "If enabled, support-related messages will be hidden.",
 
@@ -42,7 +43,14 @@
 
   "yacl3.config.streamermode:config.twitchRelayChannel": "Twitch Channel ID",
   "yacl3.config.streamermode:config.twitchRelayChannel.desc": "Channel ID to receive Twitch chat messages from.",
+  "yacl3.config.streamermode:config.twitchSideChat": "Twitch Side Chat",
+  "yacl3.config.streamermode:config.twitchSideChat.desc": "Show Twitch messages in their own chat on the right side of the screen instead of the main chat.",
 
+  "yacl3.config.streamermode:config.twitchSideChatWidth": "Twitch Side Chat Width",
+  "yacl3.config.streamermode:config.twitchSideChatWidth.desc": "Width of the Twitch side chat in pixels.",
+
+  "yacl3.config.streamermode:config.twitchSideChatHeight": "Twitch Side Chat Height",
+  "yacl3.config.streamermode:config.twitchSideChatHeight.desc": "Height of the Twitch side chat in pixels.",
   "yacl3.config.streamermode:config.category.miscellaneous": "Miscellaneous",
   "yacl3.config.streamermode:config.group.miscSettings": "Miscellaneous Settings",
 

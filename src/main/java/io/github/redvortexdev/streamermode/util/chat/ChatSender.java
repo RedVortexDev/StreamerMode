@@ -19,8 +19,8 @@ public final class ChatSender {
             return;
         }
         StreamerMode.MC.player.sendMessage(Component.empty()
-                .append(type.getPrefix())
-                .append(message)
+            .append(type.getPrefix())
+            .append(message)
         );
     }
 

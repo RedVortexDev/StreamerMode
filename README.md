@@ -2,7 +2,7 @@
 
 # StreamerMode
 
-A 1.21.3 Fabric mod for official DiamondFire streaming and content creation.
+A 26.2 Fabric mod for official DiamondFire streaming and content creation.
 
 ## Dependencies
 * [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
@@ -26,7 +26,7 @@ Hide messages from the chat matching a custom regex or messages that are:
 -   Plot advertisements
 -   Plot boosts
 -   Spy messages (session, dm, and muted spy)
--   Plugin update messages (BuycraftX, FastAsyncWorldEdit, and ViaVersion)
+-   Plugin update messages (FastAsyncWorldEdit and ViaVersion)
 
 Messages in the list that also play a sound also have their sound muted.
 
@@ -36,7 +36,7 @@ Features available to anyone using the mod.
 
 ### Twitch Chat Relay
 
-When joining DiamondFire the twitch channel in the config will be relayed into the game with unique indicators for subscribers, moderators, and bits, the system automatically updates to config changes.
+When joining DiamondFire the twitch channel in the config will be relayed into the game chat (or optionally, a side chat) with unique indicators for subscribers, moderators, and bits, the system automatically updates to config changes.
 
 ### Network Protocol Error Suppression
 
@@ -52,23 +52,8 @@ When running the mod in a development environment, such as through Intellij, str
 
 ## Account Authentication
 
-Being logged in is important when testing, this is why the project has **DevAuth** included.
+Being logged in is important when testing. Run the following once and sign in with your Microsoft account, after that the Minecraft Client run configuration in IntelliJ launches you already logged in.
 
-Depending on your operating system, create a `config.toml` file in one of the following directories:
-
--   `C:\Users\<user>\.devauth`
--   `/Users/<user>/.devauth`
--   `~/.config/devauth`
-
-And inside paste the following:
-
-```toml
-defaultEnabled = true
-
-defaultAccount = "main"
-
-[accounts.main]
-type = "microsoft"
 ```
-
-When launching the game through the Minecraft Client configuration in IntelliJ you will be prompted to authenticate your Microsoft account, this will only happen once, after that you will be logged into your account snd in any future runs.
+./gradlew microsoftLogin
+```

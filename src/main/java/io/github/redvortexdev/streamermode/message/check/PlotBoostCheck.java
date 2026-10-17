@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class PlotBoostCheck extends MessageCheck {
 
-    private static final Pattern PLOT_BOOST_REGEX = Pattern.compile(" {78}\n(.+)\n {29}\u200c→ Click to join!\n {78}");
+    private static final Pattern PLOT_BOOST_REGEX = Pattern.compile(" {78}\n(?:.*\n)+? *\u200c*→ Click to join!\n {78}");
 
     @Override
     public MessageCheckType getMessageType() {
