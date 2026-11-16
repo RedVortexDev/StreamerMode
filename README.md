@@ -2,7 +2,7 @@
 
 # StreamerMode
 
-A 26.2 Fabric mod for official DiamondFire streaming and content creation.
+A 26.3 Fabric mod for official DiamondFire streaming and content creation.
 
 ## Dependencies
 * [YetAnotherConfigLib](https://modrinth.com/mod/yacl)
